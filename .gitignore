@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output (Cloudflare Pages builds this itself)
+dist/
+
+# Test output
+test-results/
+.test-builds/
+playwright-report/
+
+# Local environment / secrets — never commit
+.env
+.env.*
+.dev.vars
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+__pycache__/
+tmp/

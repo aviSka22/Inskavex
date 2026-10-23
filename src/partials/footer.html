@@ -1,0 +1,43 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="site-footer__logo" href="/" aria-label="Inskavex — home">{{> logo}}</a>
+        <p>Inskavex is a software and technology company. We design and build websites, web and mobile applications, and the integrations that connect them.</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <div class="site-footer__group">
+          <h2 class="site-footer__heading">Company</h2>
+          <ul>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/#approach">Approach</a></li>
+            <li><a href="/#focus">What we build</a></li>
+            <li><a href="/#why">Why Inskavex</a></li>
+          </ul>
+        </div>
+        <div class="site-footer__group">
+          <h2 class="site-footer__heading">Connect</h2>
+          <ul>
+            <li><a href="/#contact">Start a conversation</a></li>
+            <li><a href="/#faq">Questions</a></li>
+            {{#if site.contact.emailEnabled}}<li><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>{{else}}<li><span class="site-footer__muted">Business email coming soon</span></li>{{/if}}
+          </ul>
+        </div>
+        <div class="site-footer__group">
+          <h2 class="site-footer__heading">Legal</h2>
+          <ul>
+            <li><a href="/privacy">Privacy notice</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© <span data-year>{{ site.year }}</span> {{ site.legal.entity }}. All rights reserved.</p>
+      <p class="site-footer__tagline"><span class="mark-dot" aria-hidden="true"></span>Building What’s Next.</p>
+      <a class="site-footer__top-link" href="#top">Back to top <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg></a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

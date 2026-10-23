@@ -1,0 +1,31 @@
+<!--page
+{
+  "title": "Page not found — Inskavex",
+  "description": "The page you were looking for could not be found. Return to the Inskavex home page or get in touch.",
+  "path": "/404",
+  "index": false,
+  "sitemap": false
+}
+-->
+{{> head}}
+</head>
+<body id="top" class="page-error">
+{{> header}}
+<main id="main" tabindex="-1" class="error-page">
+  <div class="container error-page__inner">
+    <svg class="error-page__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path class="error-page__built" d="M0 6H13V19H26V32H0Z"/>
+      <path class="error-page__slot" d="M13.5 6.5h12v12h-12z"/>
+    </svg>
+    <div class="error-page__copy">
+      <p class="eyebrow eyebrow--on-dark"><span class="eyebrow__index">404</span>Page not found</p>
+      <h1 class="error-page__title">This piece is missing.</h1>
+      <p class="error-page__text">The page you’re looking for may have moved, or it may never have existed. Everything else is where you left it.</p>
+      <div class="hero__actions">
+        <a class="button button--accent" href="/">Go to the home page</a>
+        <a class="button button--ghost-dark" href="/#contact">Contact us</a>
+      </div>
+    </div>
+  </div>
+</main>
+{{> footer}}
