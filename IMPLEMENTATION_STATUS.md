@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: **2026-10-23**. Statuses: ✅ completed · 🔄 in progress · ⏳ pending · ⛔ blocked (external).
+Last updated: **2026-10-24**. Statuses: ✅ completed · 🔄 in progress · ⏳ pending · ⛔ blocked (external).
 A stage is marked completed only when its acceptance criteria were checked (see
 [`TESTING_CHECKLIST.md`](TESTING_CHECKLIST.md)).
 
@@ -16,9 +16,9 @@ A stage is marked completed only when its acceptance criteria were checked (see
 | 4 Design system | 4.1 Tokens & components | ✅ | CSS custom properties; documented component classes |
 | 5 Stack | 5.1 Decision | ✅ | HTML + CSS + vanilla JS + tiny Node build (`PROJECT_PLAN.md` §7) |
 | 6 Responsive | 6.1 Layouts at all ranges | ✅ | No overflow at 10 widths × 3 pages (automated); screenshots reviewed 320–1920 px |
-| 7 Interaction | 7.1 Nav, menu, reveals, form | ✅ | 48 browser tests pass; reduced motion and no-JS verified |
+| 7 Interaction | 7.1 Nav, menu, reveals, form | ✅ | 52 browser tests pass; reduced motion and no-JS verified |
 | 8 Accessibility | 8.1 WCAG 2.2 AA target | ✅ | axe: 0 violations; keyboard, focus, form semantics tested. Screen readers not tested |
-| 9 Performance | 9.1 Fonts, hashing, minification | ✅ | Lighthouse mobile 99–100 / desktop 100; CLS 0 |
+| 9 Performance | 9.1 Fonts, hashing, minification | ✅ | Lighthouse mobile 98–100 / desktop 100; CLS 0 |
 | 10 SEO | 10.1 Metadata, sitemap, robots, JSON-LD | ✅ | Static checks + Lighthouse SEO 100 |
 | 11 Security | 11.1 Headers, CSP, secrets | ✅ | Generated `_headers`; zero CSP violations in tests; secret scan clean |
 | 12 Testing | 12.1 Run, fix, re-run | ✅ | Defects found in review fixed and covered by tests |
@@ -26,6 +26,10 @@ A stage is marked completed only when its acceptance criteria were checked (see
 | 14 GitHub | 14.1 Commit & push | ✅ | Pushed to `origin/ccr-9a63c2ce-k1gq04` (see final report for commit) |
 | 15 Cloudflare readiness | 15.1 Config + guide | ✅ | `.nvmrc`, `_headers`, `DEPLOYMENT.md`; build command/output verified |
 | 16 Final review | 16.1 Review vs definition of done | ✅ | See below |
+| 17 Refinement (2026-10-24) | 17.1 Motion system | ✅ | Hero assembly, word-rise titles, staggered reveals, drawing rules, icon placement, statement scrub, progress line — `DESIGN_SYSTEM.md` §6 |
+| | 17.2 Content gaps | ✅ | Applied AI capability (service 05, FAQ, form topic), engineering standards strip, statement band, “What happens next”, optional timeline field, footer wordmark |
+| | 17.3 Typography & alignment | ✅ | Em dashes kept with preceding word, optical alignment of display type, stacked service tags, ghost-button fill hover |
+| | 17.4 Competitor comparison | ⛔ | Reference sites could not be opened: `share.google`, `ranstacksolutions.com` and Arivora domains are blocked by this environment's network policy |
 
 ## External items (cannot be completed from this environment)
 

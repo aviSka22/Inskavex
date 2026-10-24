@@ -54,6 +54,8 @@ test.describe('Pages and content', () => {
     await page.goto('/');
     const ids = await page.locator('main > section[id]').evaluateAll((sections) => sections.map((s) => s.id));
     expect(ids).toEqual(SECTIONS);
+    await expect(page.locator('.statement')).toBeVisible();
+    await expect(page.locator('.standards__list li')).toHaveCount(6);
     await expect(page.locator('h1')).toContainText('Building what’s next');
     await expect(page.locator('.service')).toHaveCount(6);
     await expect(page.locator('.step')).toHaveCount(6);
@@ -368,12 +370,14 @@ test.describe('Contact form — email only (test build)', () => {
     await page.goto(`${EMAIL_SITE}/#contact`);
     await expect(page.locator('.contact__email')).toHaveAttribute('href', 'mailto:hello@example.com');
     await fillValidForm(page);
+    await page.selectOption('#cf-timeline', 'Within 1–3 months');
     await page.locator('[data-submit]').click();
     const status = page.locator('[data-form-status]');
     await expect(status).toContainText('has not been sent yet');
     const href = await status.locator('a').getAttribute('href');
     expect(href).toMatch(/^mailto:hello@example\.com\?subject=/);
     expect(decodeURIComponent(href)).toContain('We would like to discuss a new website');
+    expect(decodeURIComponent(href)).toContain('Timeline: Within 1–3 months');
   });
 });
 
@@ -388,6 +392,9 @@ test.describe('Motion and progressive enhancement', () => {
     const duration = await page.locator('.hero-art__next').evaluate((el) => parseFloat(getComputedStyle(el).animationDuration));
     expect(duration).toBeLessThan(0.01);
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
+    // Without motion, headings are not split and the statement is fully lit.
+    expect(await page.locator('#services-title .w').count()).toBe(0);
+    await expect(page.locator('[data-statement]')).not.toHaveClass(/statement--scrub/);
     await context.close();
   });
 
@@ -397,6 +404,53 @@ test.describe('Motion and progressive enhancement', () => {
     const target = page.locator('#faq .faq__list');
     await target.scrollIntoViewIfNeeded();
     await expect(target).toHaveClass(/is-visible/);
+  });
+
+  test('headings keep their exact text after being split into words', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('h1')).toHaveText('Building what’s next, engineered to last.');
+    await expect(page.locator('#services-title')).toHaveText('What we do');
+    await expect(page.locator('#contact-title')).toHaveText('Let’s talk about what you’re building.');
+    expect(await page.locator('#services-title .w').count()).toBe(3);
+  });
+
+  test('every animated element ends fully visible after scrolling the page', async ({ page }) => {
+    await page.goto('/');
+    const height = await page.evaluate(() => document.documentElement.scrollHeight);
+    for (let y = 0; y < height; y += 500) {
+      await page.evaluate((top) => window.scrollTo(0, top), y);
+      await page.waitForTimeout(60);
+    }
+    await page.waitForTimeout(1800);
+    const hidden = await page.evaluate(() =>
+      [...document.querySelectorAll('.reveal, .section-title .w > span, .focus__item, .step')]
+        .filter((el) => {
+          const style = getComputedStyle(el);
+          return parseFloat(style.opacity) < 0.99 || (style.transform !== 'none' && style.transform !== 'matrix(1, 0, 0, 1, 0, 0)');
+        })
+        .map((el) => el.className || el.textContent),
+    );
+    expect(hidden).toEqual([]);
+    expect(await page.locator('.rule-draw:not(.is-visible)').count()).toBe(0);
+  });
+
+  test('statement band lights up as it is read', async ({ page }) => {
+    await page.goto('/');
+    const statement = page.locator('[data-statement]');
+    await expect(statement).toHaveClass(/statement--scrub/);
+    expect(await statement.locator('.sw.is-lit').count()).toBe(0);
+    // Fully lit once the passage's bottom reaches the reading line (45% of the viewport).
+    await statement.evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.4));
+    await expect.poll(() => statement.locator('.sw:not(.is-lit)').count()).toBe(0);
+    await expect(statement).toHaveText(/That is the standard we build to\.$/);
+  });
+
+  test('header progress line follows the scroll position', async ({ page }) => {
+    await page.goto('/');
+    const progress = () => page.locator('[data-header]').evaluate((el) => parseFloat(el.style.getPropertyValue('--progress')));
+    expect(await progress()).toBe(0);
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(progress).toBeGreaterThan(0.99);
   });
 
   test('site is readable and navigable without JavaScript', async ({ browser }) => {

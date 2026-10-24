@@ -132,10 +132,33 @@ Headings use `text-wrap: balance`; paragraphs `text-wrap: pretty`. Reading width
 - Depth: hairlines and tone changes rather than shadows.
 - Durations: 160 ms (hover), 280 ms (menu, icons), 700 ms (reveals, service rule).
 - Easing: `cubic-bezier(0.2, 0.7, 0.1, 1)`.
-- Motion inventory: hero piece placement (once), section reveal on scroll,
-  link/icon nudges, service-row ember rule, menu fade. All disabled under
-  `prefers-reduced-motion: reduce`; reveals are only enabled once JavaScript is
-  running, so content is never hidden if scripts fail.
+- Easing for entrances: `--ease-expo: cubic-bezier(0.16, 1, 0.3, 1)`; stagger step `--stagger: 90ms`.
+
+### Motion inventory
+
+Every motion expresses the brand idea — *things are built, then the next piece is placed* —
+and nothing loops or moves on its own after it has arrived.
+
+| Moment | Motion | Implementation |
+| --- | --- | --- |
+| Hero load | Eyebrow, then headline rises word by word from a mask; lead and buttons follow | CSS keyframes; words pre-split in HTML (`.w`) |
+| Hero load | Artwork assembles in 11 diagonal courses from the bottom-left, the dashed slot appears, the ember piece settles into place, then the arrow and caption | CSS keyframes on SVG groups (grouped to keep main-thread cost low) |
+| Hero load | Capability strip items rise in sequence | CSS, `.dl-n` delay classes |
+| Section titles | Rise word by word as they enter | `main.js` splits words; CSS transitions |
+| Content blocks | Fade-and-rise; items arriving together are staggered in reading order | IntersectionObserver assigns `--dl` |
+| List top rules | Draw left → right | `.rule-draw::before` scaleX |
+| Process | Markers draw in sequence (vertical rail on phones, bars above) | `.step::before` scale |
+| Focus icons | The ember “next piece” of each icon is placed on arrival; nudges on hover | inline SVG, `.icon-accent` |
+| Statement band | Words light up as the passage is read (reversible) | scroll-linked, rAF-throttled |
+| Header | 2 px ember reading-progress line | `--progress` on the header |
+| Mobile menu | Links rise in sequence | CSS |
+| Hover | Ghost buttons fill-wipe; arrows nudge; service title shifts toward the ember rule | CSS |
+
+Safeguards: everything is disabled under `prefers-reduced-motion: reduce` (headings are
+then not split and the statement is fully lit); scroll reveals switch on only after the
+IntersectionObserver's first callback, so content already on screen never flashes and
+nothing is hidden if JavaScript fails; the CSP needs no inline styles (delays are classes
+or CSSOM custom properties).
 
 ## 7. Focus and states
 
@@ -152,7 +175,9 @@ Headings use `text-wrap: balance`; paragraphs `text-wrap: pretty`. Reading width
 | Buttons | `.button` + `--accent`, `--ink`, `--ghost-dark`, `--large` |
 | Links | `.text-link`, `.link-arrow` |
 | Services index | `.services`, `.service`, `__index`, `__title`, `__problem`, `__desc`, `__tags` |
-| Process | `.steps`, `.step` (vertical rail on phones, 2/3-column grid above) |
+| Process | `.steps`, `.step` (vertical rail on phones, 2/3-column grid above), `.standards` |
+| Statement band | `.statement`, `.statement__text`, `.statement__accent` |
+| Contact next steps | `.next-steps` |
 | Focus areas | `.focus`, `.focus__item`, `.focus__icon` |
 | Principles | `.principles`, `.principle` |
 | FAQ | `.faq__item` (native `<details>`) |

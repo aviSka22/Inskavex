@@ -106,6 +106,7 @@ Full detail in [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md).
   #services       02 What we do (6 services, editorial index)
   #approach       03 How we work (6-step process)
   #focus          04 What we build (6 focus areas)
+  (statement)     Statement band — how we measure good work
   #why            05 Why work with us (6 principles)
   #faq            06 Questions (incl. project-inquiry guidance)
   #contact        07 Contact — form + direct email

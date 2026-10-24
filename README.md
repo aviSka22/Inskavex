@@ -8,7 +8,7 @@ ready for **Cloudflare Pages**.
 
 | | |
 | --- | --- |
-| Pages | Home (hero, about, services, approach, what we build, why Inskavex, FAQ, contact), privacy notice, 404 |
+| Pages | Home (hero, about, services, approach, what we build, statement, why Inskavex, FAQ, contact), privacy notice, 404 |
 | Runtime dependencies | None — no framework, no third-party scripts, fonts or images |
 | Build output | `dist/` |
 | Planned domain | `https://inskavex.com` (not yet purchased) |
@@ -66,7 +66,7 @@ Content Security Policy) — so what works in preview works in production.
 
 ```bash
 npx playwright install chromium   # once per machine
-npm test                          # build + static checks + 48 browser tests
+npm test                          # build + static checks + 52 browser tests
 ```
 
 | Command | What it does |

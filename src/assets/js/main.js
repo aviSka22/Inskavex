@@ -17,22 +17,33 @@
     element.textContent = year;
   });
 
-  /* Header state ---------------------------------------------------------- */
+  /* Scroll loop: one rAF-throttled listener shared by all scroll effects ---- */
+
+  const scrollTasks = [];
+  let ticking = false;
+  const runScrollTasks = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      scrollTasks.forEach((task) => task());
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', runScrollTasks, { passive: true });
+  window.addEventListener('resize', runScrollTasks, { passive: true });
+
+  /* Header state and reading progress ------------------------------------- */
 
   const header = document.querySelector('[data-header]');
   if (header) {
-    let ticking = false;
-    const update = () => {
+    const updateHeader = () => {
       header.classList.toggle('is-scrolled', window.scrollY > 8);
-      ticking = false;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+      header.style.setProperty('--progress', progress.toFixed(4));
     };
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(update);
-      }
-    }, { passive: true });
-    update();
+    scrollTasks.push(updateHeader);
+    updateHeader();
   }
 
   /* Mobile navigation ----------------------------------------------------- */
@@ -96,26 +107,111 @@
     sections.forEach((section) => observer.observe(section));
   }
 
-  /* Reveal on scroll ------------------------------------------------------ */
+  /* Motion: word splitting, staggered reveals, statement band ------------ */
 
-  const revealItems = [...document.querySelectorAll('.reveal')];
-  if (revealItems.length && 'IntersectionObserver' in window && !reducedMotion.matches) {
-    // Anything already on screen is shown immediately to avoid a flash.
-    revealItems.forEach((item) => {
-      if (item.getBoundingClientRect().top < window.innerHeight) item.classList.add('is-visible');
+  // Wraps every word inside `element` (including nested elements) using
+  // makeWord(text). Spaces stay as plain text, so line breaking and the text
+  // read by assistive technology are unchanged.
+  function splitWords(element, makeWord) {
+    const words = [];
+    [...element.childNodes].forEach((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        words.push(...splitWords(node, makeWord));
+      } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+        const fragment = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            fragment.append(part);
+          } else {
+            const word = makeWord(part);
+            words.push(word);
+            fragment.append(word);
+          }
+        });
+        node.replaceWith(fragment);
+      }
     });
+    return words;
+  }
+
+  const maskedWord = (text) => {
+    const outer = document.createElement('span');
+    const inner = document.createElement('span');
+    outer.className = 'w';
+    inner.textContent = text;
+    outer.append(inner);
+    return outer;
+  };
+
+  const motionAllowed = 'IntersectionObserver' in window && !reducedMotion.matches;
+
+  if (motionAllowed) {
+    document.querySelectorAll('.section-title').forEach((title) => {
+      splitWords(title, maskedWord).forEach((word, index) => word.style.setProperty('--dl', index));
+    });
+
+    const targets = [...document.querySelectorAll('.reveal, .section-title, .rule-draw, .step')];
+    let firstCallback = true;
+
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -8% 0px' });
-    revealItems.forEach((item) => {
-      if (!item.classList.contains('is-visible')) observer.observe(item);
+      const arriving = entries.filter((entry) => entry.isIntersecting);
+      arriving.forEach((entry) => observer.unobserve(entry.target));
+
+      if (firstCallback) {
+        // Whatever is already on screen is shown as-is; only then is motion
+        // switched on, so nothing visible ever flashes. No layout is read here.
+        firstCallback = false;
+        arriving.forEach((entry) => entry.target.classList.add('is-visible'));
+        root.classList.add('motion-ready');
+        return;
+      }
+
+      // Items arriving together (a grid row, a list) are staggered in reading order.
+      arriving
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left)
+        .forEach(({ target }, index) => {
+          if (target.classList.contains('reveal') || target.classList.contains('step')) {
+            target.style.setProperty('--dl', Math.min(index, 6));
+          }
+          target.classList.add('is-visible');
+        });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    targets.forEach((target) => observer.observe(target));
+
+    // Once revealed, give elements back their own transitions (e.g. button hovers).
+    document.addEventListener('transitionend', (event) => {
+      const target = event.target;
+      if (event.propertyName === 'opacity' && target.classList.contains('reveal') && target.classList.contains('is-visible')) {
+        target.classList.remove('reveal');
+        target.style.removeProperty('--dl');
+      }
     });
-    root.classList.add('motion-ready');
+
+    // Statement band: words light up as the passage is read.
+    const statement = document.querySelector('[data-statement]');
+    if (statement) {
+      const words = splitWords(statement, (text) => {
+        const word = document.createElement('span');
+        word.className = 'sw';
+        word.textContent = text;
+        return word;
+      });
+      statement.classList.add('statement--scrub');
+      let litCount = -1;
+      const scrub = () => {
+        const rect = statement.getBoundingClientRect();
+        const viewport = window.innerHeight;
+        // 0 when the text's top reaches 85% of the viewport, 1 when its bottom reaches 45%.
+        const progress = (viewport * 0.85 - rect.top) / (viewport * 0.4 + rect.height);
+        const count = Math.round(Math.max(0, Math.min(1, progress)) * words.length);
+        if (count === litCount) return;
+        litCount = count;
+        words.forEach((word, index) => word.classList.toggle('is-lit', index < count));
+      };
+      scrollTasks.push(scrub);
+      scrub();
+    }
   }
 
   /* Contact form ---------------------------------------------------------- */
@@ -234,6 +330,7 @@
       email: value('email'),
       organization: value('organization'),
       topic: value('topic'),
+      timeline: value('timeline'),
       message: value('message'),
     };
   }
@@ -243,6 +340,7 @@
     const details = [`Name: ${data.name}`, `Email: ${data.email}`];
     if (data.organization) details.push(`Organization: ${data.organization}`);
     details.push(`Topic: ${data.topic}`);
+    if (data.timeline) details.push(`Timeline: ${data.timeline}`);
     const body = `${details.join('\n')}\n\n${data.message}`;
     return `mailto:${businessEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }

@@ -17,8 +17,8 @@
     <div class="container hero__inner">
       <div class="hero__copy">
         <p class="eyebrow eyebrow--on-dark"><span class="mark-dot" aria-hidden="true"></span>Software &amp; technology company</p>
-        <h1 class="hero__title" id="hero-title">Building what’s next, <span class="hero__title-line">engineered to last.</span></h1>
-        <p class="hero__lead">Inskavex designs and builds websites, web and mobile applications, and the integrations that connect them. Practical software, shaped around real problems — and written to be understood, maintained and grown.</p>
+        <h1 class="hero__title" id="hero-title"><span class="w dl-0"><span>Building</span></span> <span class="w dl-1"><span>what’s</span></span> <span class="w dl-2"><span>next,</span></span> <span class="hero__title-line"><span class="w dl-3"><span>engineered</span></span> <span class="w dl-4"><span>to</span></span> <span class="w dl-5"><span>last.</span></span></span></h1>
+        <p class="hero__lead">Inskavex designs and builds websites, web and mobile applications, and the integrations that connect them. Practical software, shaped around real problems&nbsp;— and written to be understood, maintained and grown.</p>
         <div class="hero__actions">
           <a class="button button--accent button--large" href="#contact">Start a conversation <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
           <a class="button button--ghost-dark button--large" href="#services">See what we do</a>
@@ -31,27 +31,25 @@
             <pattern id="art-grid" width="52" height="52" x="24" y="120" patternUnits="userSpaceOnUse">
               <path class="hero-art__grid" d="M52 0H0V52"/>
             </pattern>
-            <pattern id="art-seams" width="52" height="52" x="24" y="120" patternUnits="userSpaceOnUse">
-              <path class="hero-art__seam" d="M0 0H52M0 0V52"/>
-            </pattern>
             <pattern id="art-seams-next" width="52" height="52" x="328" y="24" patternUnits="userSpaceOnUse">
               <path class="hero-art__seam-next" d="M0 0H52M0 0V52"/>
             </pattern>
-          <mask id="art-built-mask"><path transform="translate(24 24)" fill="#fff" d="M0 96H208V304H416V512H0Z"/></mask>
           </defs>
-          <rect width="560" height="560" fill="url(#art-grid)"/>
+          <rect class="hero-art__grid-layer" width="560" height="560" fill="url(#art-grid)"/>
+          <!-- What has been built: the block, minus one quadrant, tile by tile. -->
           <g transform="translate(24 24)">
-            <!-- What has been built: the block, minus one quadrant. -->
-            <path class="hero-art__built" d="M0 96H208V304H416V512H0Z"/>
-            <rect class="hero-art__tile" x="52" y="148" width="52" height="52"/>
-            <rect class="hero-art__tile" x="156" y="252" width="52" height="52"/>
-            <rect class="hero-art__tile" x="0" y="356" width="52" height="52"/>
-            <rect class="hero-art__tile" x="260" y="408" width="52" height="52"/>
-            <rect class="hero-art__tile" x="364" y="304" width="52" height="52"/>
-            <rect class="hero-art__tile hero-art__tile--deep" x="104" y="460" width="52" height="52"/>
-            <rect class="hero-art__tile hero-art__tile--deep" x="312" y="356" width="52" height="52"/>
+            <g class="hero-art__course dl-0"><rect class="hero-art__tile" x="2" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-1"><rect class="hero-art__tile" x="2" y="410" width="48" height="48"/><rect class="hero-art__tile" x="54" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-2"><rect class="hero-art__tile hero-art__tile--lit" x="2" y="358" width="48" height="48"/><rect class="hero-art__tile" x="54" y="410" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--deep" x="106" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-3"><rect class="hero-art__tile" x="2" y="306" width="48" height="48"/><rect class="hero-art__tile" x="54" y="358" width="48" height="48"/><rect class="hero-art__tile" x="106" y="410" width="48" height="48"/><rect class="hero-art__tile" x="158" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-4"><rect class="hero-art__tile" x="2" y="254" width="48" height="48"/><rect class="hero-art__tile" x="54" y="306" width="48" height="48"/><rect class="hero-art__tile" x="106" y="358" width="48" height="48"/><rect class="hero-art__tile" x="158" y="410" width="48" height="48"/><rect class="hero-art__tile" x="210" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-5"><rect class="hero-art__tile" x="2" y="202" width="48" height="48"/><rect class="hero-art__tile" x="54" y="254" width="48" height="48"/><rect class="hero-art__tile" x="106" y="306" width="48" height="48"/><rect class="hero-art__tile" x="158" y="358" width="48" height="48"/><rect class="hero-art__tile" x="210" y="410" width="48" height="48"/><rect class="hero-art__tile" x="262" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-6"><rect class="hero-art__tile" x="2" y="150" width="48" height="48"/><rect class="hero-art__tile" x="54" y="202" width="48" height="48"/><rect class="hero-art__tile" x="106" y="254" width="48" height="48"/><rect class="hero-art__tile" x="158" y="306" width="48" height="48"/><rect class="hero-art__tile" x="210" y="358" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="262" y="410" width="48" height="48"/><rect class="hero-art__tile" x="314" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-7"><rect class="hero-art__tile" x="2" y="98" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="54" y="150" width="48" height="48"/><rect class="hero-art__tile" x="106" y="202" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="158" y="254" width="48" height="48"/><rect class="hero-art__tile" x="210" y="306" width="48" height="48"/><rect class="hero-art__tile" x="262" y="358" width="48" height="48"/><rect class="hero-art__tile" x="314" y="410" width="48" height="48"/><rect class="hero-art__tile" x="366" y="462" width="48" height="48"/></g>
+            <g class="hero-art__course dl-8"><rect class="hero-art__tile" x="54" y="98" width="48" height="48"/><rect class="hero-art__tile" x="106" y="150" width="48" height="48"/><rect class="hero-art__tile" x="158" y="202" width="48" height="48"/><rect class="hero-art__tile" x="262" y="306" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--deep" x="314" y="358" width="48" height="48"/><rect class="hero-art__tile" x="366" y="410" width="48" height="48"/></g>
+            <g class="hero-art__course dl-9"><rect class="hero-art__tile" x="106" y="98" width="48" height="48"/><rect class="hero-art__tile" x="158" y="150" width="48" height="48"/><rect class="hero-art__tile" x="314" y="306" width="48" height="48"/><rect class="hero-art__tile" x="366" y="358" width="48" height="48"/></g>
+            <g class="hero-art__course dl-10"><rect class="hero-art__tile" x="158" y="98" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="366" y="306" width="48" height="48"/></g>
           </g>
-          <rect width="560" height="560" fill="url(#art-seams)" class="hero-art__seams-layer" mask="url(#art-built-mask)"/>
           <g transform="translate(24 24)">
             <!-- Where the next piece goes. -->
             <rect class="hero-art__slot" x="209" y="97" width="206" height="206"/>
@@ -65,7 +63,7 @@
             <rect x="328" y="24" width="208" height="208" fill="url(#art-seams-next)"/>
           </g>
         </svg>
-        <figcaption class="hero__caption"><span>Fig. 01</span> The next piece — planned before it’s placed.</figcaption>
+        <figcaption class="hero__caption"><span>Fig. 01</span> The next piece&nbsp;— planned before it’s&nbsp;placed.</figcaption>
       </figure>
     </div>
 
@@ -73,12 +71,12 @@
       <div class="hero__capabilities">
         <p class="hero__capabilities-label">Capabilities</p>
         <ul>
-          <li>Custom software</li>
-          <li>Web applications</li>
-          <li>Websites</li>
-          <li>Mobile apps</li>
-          <li>Automation &amp; integration</li>
-          <li>Technical consulting</li>
+          <li class="dl-0">Custom software</li>
+          <li class="dl-1">Web applications</li>
+          <li class="dl-2">Websites</li>
+          <li class="dl-3">Mobile apps</li>
+          <li class="dl-4">Automation &amp; AI</li>
+          <li class="dl-5">Technical consulting</li>
         </ul>
       </div>
     </div>
@@ -89,9 +87,9 @@
     <div class="container">
       <p class="eyebrow reveal"><span class="eyebrow__index">01</span>About Inskavex</p>
       <div class="about">
-        <h2 class="section-title about__title reveal" id="about-title">Technology that starts with the problem in front of you.</h2>
+        <h2 class="section-title about__title" id="about-title">Technology that starts with the problem in front of you.</h2>
         <div class="about__body reveal">
-          <p class="lead">Inskavex is a software and technology company. We help businesses and organizations turn ideas, processes and plans into dependable digital products — from a first website to the systems a team relies on every day.</p>
+          <p class="lead">Inskavex is a software and technology company. We help businesses and organizations turn ideas, processes and plans into dependable digital products&nbsp;— from a first website to the systems a team relies on every day.</p>
           <p>Our work begins with understanding: who will use what we build, what they need it to do, and what has to be true for it to keep working long after launch. From there, we design and engineer software that is clear to use, sound underneath and straightforward to look after.</p>
           <p>We favor clarity over complexity, proven technology over passing trends, and steady, visible progress over big reveals.</p>
         </div>
@@ -99,7 +97,7 @@
 
       <div class="values reveal">
         <h3 class="values__title">What guides the work</h3>
-        <dl class="values__list">
+        <dl class="rule-draw values__list">
           <div class="values__item">
             <dt>Clarity</dt>
             <dd>Interfaces people understand at a glance, and code other engineers can read.</dd>
@@ -127,20 +125,20 @@
       <div class="section-head section-head--split">
         <div>
           <p class="eyebrow reveal"><span class="eyebrow__index">02</span>Services</p>
-          <h2 class="section-title reveal" id="services-title">What we do</h2>
+          <h2 class="section-title" id="services-title">What we do</h2>
         </div>
         <p class="section-intro reveal">A focused set of capabilities, each aimed at a particular kind of problem. Most projects draw on more than one.</p>
       </div>
 
-      <ol class="services" role="list">
+      <ol class="rule-draw services" role="list">
         <li class="service reveal">
           <span class="service__index" aria-hidden="true">01</span>
           <div class="service__head">
             <h3 class="service__title">Custom software development</h3>
             <p class="service__problem">For work that off-the-shelf tools don’t quite fit.</p>
           </div>
-          <p class="service__desc">Software designed around how your organization actually operates — replacing spreadsheets, manual steps and workarounds with tools built for the job.</p>
-          <p class="service__tags"><span class="visually-hidden">Typically involves: </span>Requirements / Architecture / Development</p>
+          <p class="service__desc">Software designed around how your organization actually operates&nbsp;— replacing spreadsheets, manual steps and workarounds with tools built for the job.</p>
+          <ul class="service__tags" role="list" aria-label="Typically involves"><li>Requirements</li><li>Architecture</li><li>Development</li></ul>
         </li>
         <li class="service reveal">
           <span class="service__index" aria-hidden="true">02</span>
@@ -148,8 +146,8 @@
             <h3 class="service__title">Web applications</h3>
             <p class="service__problem">For products and tools people use in the browser.</p>
           </div>
-          <p class="service__desc">Customer portals, dashboards, booking and management systems, and internal tools — responsive, and built with security and performance in mind from the start.</p>
-          <p class="service__tags"><span class="visually-hidden">Typically involves: </span>Front end / Back end / APIs</p>
+          <p class="service__desc">Customer portals, dashboards, booking and management systems, and internal tools&nbsp;— responsive, and built with security and performance in mind from the start.</p>
+          <ul class="service__tags" role="list" aria-label="Typically involves"><li>Front end</li><li>Back end</li><li>APIs</li></ul>
         </li>
         <li class="service reveal">
           <span class="service__index" aria-hidden="true">03</span>
@@ -158,7 +156,7 @@
             <p class="service__problem">For a clear, credible presence online.</p>
           </div>
           <p class="service__desc">Company and marketing websites that load quickly, read well on every screen, are built to accessibility standards and are easy to keep up to date.</p>
-          <p class="service__tags"><span class="visually-hidden">Typically involves: </span>Design / Development / Search foundations</p>
+          <ul class="service__tags" role="list" aria-label="Typically involves"><li>Design</li><li>Development</li><li>Search foundations</li></ul>
         </li>
         <li class="service reveal">
           <span class="service__index" aria-hidden="true">04</span>
@@ -167,16 +165,16 @@
             <p class="service__problem">For services that belong in people’s pockets.</p>
           </div>
           <p class="service__desc">Apps for iOS and Android that extend a product or service to mobile, with careful attention to performance, usability and the realities of small screens.</p>
-          <p class="service__tags"><span class="visually-hidden">Typically involves: </span>Cross-platform / Interface design / Testing</p>
+          <ul class="service__tags" role="list" aria-label="Typically involves"><li>Cross-platform</li><li>Interface design</li><li>Testing</li></ul>
         </li>
         <li class="service reveal">
           <span class="service__index" aria-hidden="true">05</span>
           <div class="service__head">
-            <h3 class="service__title">Automation &amp; integration</h3>
+            <h3 class="service__title">Automation, integration &amp; AI</h3>
             <p class="service__problem">For processes held together by copy and paste.</p>
           </div>
-          <p class="service__desc">Connecting the systems you already use through APIs and automated workflows, so information moves where it needs to without repeated manual effort.</p>
-          <p class="service__tags"><span class="visually-hidden">Typically involves: </span>APIs / Workflows / Data sync</p>
+          <p class="service__desc">Connecting the systems you already use through APIs and automated workflows&nbsp;— and adding practical AI features, such as document search or drafting assistants, where they genuinely save time.</p>
+          <ul class="service__tags" role="list" aria-label="Typically involves"><li>APIs</li><li>Workflows</li><li>Applied AI</li></ul>
         </li>
         <li class="service reveal">
           <span class="service__index" aria-hidden="true">06</span>
@@ -184,8 +182,8 @@
             <h3 class="service__title">Technical consulting &amp; planning</h3>
             <p class="service__problem">For decisions that are expensive to get wrong.</p>
           </div>
-          <p class="service__desc">Scoping, technology selection, architecture planning and reviews of existing systems — so you can move forward with a clear picture of the options, costs and risks.</p>
-          <p class="service__tags"><span class="visually-hidden">Typically involves: </span>Scoping / Architecture / Reviews</p>
+          <p class="service__desc">Scoping, technology selection, architecture planning and reviews of existing systems&nbsp;— so you can move forward with a clear picture of the options, costs and risks.</p>
+          <ul class="service__tags" role="list" aria-label="Typically involves"><li>Scoping</li><li>Architecture</li><li>Reviews</li></ul>
         </li>
       </ol>
 
@@ -199,9 +197,9 @@
       <div class="section-head section-head--split">
         <div>
           <p class="eyebrow eyebrow--on-dark reveal"><span class="eyebrow__index">03</span>Approach</p>
-          <h2 class="section-title reveal" id="approach-title">How we work</h2>
+          <h2 class="section-title" id="approach-title">How we work</h2>
         </div>
-        <p class="section-intro reveal">A clear, collaborative process that keeps decisions visible and progress easy to follow. These are our working principles — every engagement is shaped around its own goals, scale and constraints.</p>
+        <p class="section-intro reveal">A clear, collaborative process that keeps decisions visible and progress easy to follow. These are our working principles&nbsp;— every engagement is shaped around its own goals, scale and constraints.</p>
       </div>
 
       <ol class="steps" role="list">
@@ -228,14 +226,26 @@
         <li class="step reveal">
           <span class="step__number" aria-hidden="true">05</span>
           <h3 class="step__title">Test &amp; refine</h3>
-          <p>Functionality, accessibility, performance and security are checked throughout — not left to the final week.</p>
+          <p>Functionality, accessibility, performance and security are checked throughout&nbsp;— not left to the final week.</p>
         </li>
         <li class="step reveal">
           <span class="step__number" aria-hidden="true">06</span>
           <h3 class="step__title">Deliver &amp; improve</h3>
-          <p>We launch carefully, hand over clear documentation and plan what comes next — maintenance, improvements and new features.</p>
+          <p>We launch carefully, hand over clear documentation and plan what comes next&nbsp;— maintenance, improvements and new features.</p>
         </li>
       </ol>
+
+      <div class="standards reveal">
+        <h3 class="standards__title">Standard practice on every engagement</h3>
+        <ul class="standards__list" role="list">
+          <li>Accessibility (WCAG 2.2 AA)</li>
+          <li>Performance budgets</li>
+          <li>Secure defaults</li>
+          <li>Version control &amp; code review</li>
+          <li>Automated testing</li>
+          <li>Documentation &amp; handover</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -245,43 +255,51 @@
       <div class="section-head section-head--split">
         <div>
           <p class="eyebrow reveal"><span class="eyebrow__index">04</span>Areas of focus</p>
-          <h2 class="section-title reveal" id="focus-title">What we build</h2>
+          <h2 class="section-title" id="focus-title">What we build</h2>
         </div>
-        <p class="section-intro reveal">The kinds of digital products and solutions we focus on — each one built to fit its context, rather than poured into a one-size-fits-all template.</p>
+        <p class="section-intro reveal">The kinds of digital products and solutions we focus on&nbsp;— each one built to fit its context, rather than poured into a one-size-fits-all template.</p>
       </div>
 
-      <ul class="focus" role="list">
+      <ul class="rule-draw focus" role="list">
         <li class="focus__item reveal">
-          <svg class="focus__icon" aria-hidden="true" focusable="false"><use href="#i-platform"/></svg>
+          <svg class="focus__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.75 3.75h18.5v16.5H2.75zM8.25 3.75v16.5M11.5 15.5v-3M14.5 15.5v-6M17.5 15.5v-4" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="icon-accent" d="M4.25 6.25h2.5v2.5h-2.5z"/></svg>
           <h3 class="focus__title">Business platforms &amp; internal tools</h3>
           <p>Operations dashboards, admin panels, scheduling, inventory and reporting tools that help teams work from a single, reliable source.</p>
         </li>
         <li class="focus__item reveal">
-          <svg class="focus__icon" aria-hidden="true" focusable="false"><use href="#i-webapp"/></svg>
+          <svg class="focus__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.75 3.75h18.5v16.5H2.75zM2.75 8.25h18.5M6.5 12h7M6.5 15.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="icon-accent" d="M15.5 12h3v4h-3z"/></svg>
           <h3 class="focus__title">Customer-facing web applications</h3>
           <p>Portals, account areas, booking flows and self-service tools that make it easier for customers to get things done.</p>
         </li>
         <li class="focus__item reveal">
-          <svg class="focus__icon" aria-hidden="true" focusable="false"><use href="#i-website"/></svg>
+          <svg class="focus__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.75 3.75h18.5v16.5H2.75zM6.5 8h11M6.5 11.5h6M6.5 16.5h11" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="icon-accent" d="M15 10.25h2.5v2.5H15z"/></svg>
           <h3 class="focus__title">Corporate &amp; marketing websites</h3>
           <p>Fast, accessible, search-friendly websites that present an organization clearly and are simple to keep current.</p>
         </li>
         <li class="focus__item reveal">
-          <svg class="focus__icon" aria-hidden="true" focusable="false"><use href="#i-mobile"/></svg>
+          <svg class="focus__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.75 2.75h10.5v18.5H6.75zM10.5 18h3" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="icon-accent" d="M9.25 5.75h5.5v5.5h-5.5z"/></svg>
           <h3 class="focus__title">Mobile experiences</h3>
           <p>Companion apps and mobile-first interfaces that bring an existing product or service to phones and tablets.</p>
         </li>
         <li class="focus__item reveal">
-          <svg class="focus__icon" aria-hidden="true" focusable="false"><use href="#i-integrate"/></svg>
+          <svg class="focus__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.75 4.75h6.5v6.5h-6.5zM14.75 12.75h6.5v6.5h-6.5zM6 11.25V16h8.75M18 12.75V8H9.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="icon-accent" d="M16.25 14.25h3.5v3.5h-3.5z"/></svg>
           <h3 class="focus__title">Integrations &amp; data flows</h3>
           <p>Connections between payment, CRM, accounting, messaging and other platforms, with data kept consistent across all of them.</p>
         </li>
         <li class="focus__item reveal">
-          <svg class="focus__icon" aria-hidden="true" focusable="false"><use href="#i-prototype"/></svg>
+          <svg class="focus__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.75 6.75h14.5v14.5H2.75z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.5 2"/><path class="icon-accent" d="M13 2.5h8.5V11H13z"/></svg>
           <h3 class="focus__title">Prototypes &amp; first versions</h3>
           <p>Focused early releases that test an idea with real users before committing to a larger build.</p>
         </li>
       </ul>
+    </div>
+  </section>
+
+  <!-- Statement ------------------------------------------------------------>
+  <section class="statement" aria-label="Our view of good software">
+    <div class="container statement__inner">
+      <p class="statement__sign"><span class="mark-dot" aria-hidden="true"></span>How we measure good work</p>
+      <p class="statement__text" data-statement>The best software doesn’t ask for attention. It works, it lasts, and it stays easy to change long after launch. <span class="statement__accent">That is the standard we build to.</span></p>
     </div>
   </section>
 
@@ -290,20 +308,20 @@
     <div class="container why">
       <div class="why__head">
         <p class="eyebrow reveal"><span class="eyebrow__index">05</span>Why Inskavex</p>
-        <h2 class="section-title reveal" id="why-title">Why work with us</h2>
-        <p class="section-intro reveal">What you can expect from the way we work — on a small website or a long-running platform.</p>
+        <h2 class="section-title" id="why-title">Why work with us</h2>
+        <p class="section-intro reveal">What you can expect from the way we work&nbsp;— on a small website or a long-running platform.</p>
         <a class="button button--ink why__cta reveal" href="#contact">Discuss your project <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
       </div>
-      <ol class="principles" role="list">
+      <ol class="rule-draw principles" role="list">
         <li class="principle reveal">
           <span class="principle__index" aria-hidden="true">01</span>
           <h3 class="principle__title">Plain-spoken communication.</h3>
-          <p>Regular updates in clear language, decisions explained, and risks raised early — not discovered at the end.</p>
+          <p>Regular updates in clear language, decisions explained, and risks raised early&nbsp;— not discovered at the end.</p>
         </li>
         <li class="principle reveal">
           <span class="principle__index" aria-hidden="true">02</span>
           <h3 class="principle__title">Software you can live with.</h3>
-          <p>Readable code, sensible structure and real documentation, so your software can be understood and maintained by any capable team — including ours.</p>
+          <p>Readable code, sensible structure and real documentation, so your software can be understood and maintained by any capable team&nbsp;— including ours.</p>
         </li>
         <li class="principle reveal">
           <span class="principle__index" aria-hidden="true">03</span>
@@ -334,13 +352,13 @@
     <div class="container faq">
       <div class="faq__head">
         <p class="eyebrow reveal"><span class="eyebrow__index">06</span>Questions</p>
-        <h2 class="section-title reveal" id="faq-title">Good to know</h2>
+        <h2 class="section-title" id="faq-title">Good to know</h2>
         <p class="section-intro reveal">Answers to common questions about starting a project. Anything else? <a class="text-link" href="#contact">Ask us directly</a>.</p>
       </div>
-      <div class="faq__list reveal">
+      <div class="rule-draw faq__list reveal">
         <details class="faq__item">
           <summary>What kinds of projects does Inskavex take on?</summary>
-          <p>Websites, web and mobile applications, custom business software, automation and system integrations, and technical planning. If your project sits somewhere in between, get in touch — the best starting point is a description of the problem you want to solve.</p>
+          <p>Websites, web and mobile applications, custom business software, automation and system integrations, practical AI features, and technical planning. If your project sits somewhere in between, get in touch&nbsp;— the best starting point is a description of the problem you want to solve.</p>
         </details>
         <details class="faq__item">
           <summary>Can you work with our existing systems?</summary>
@@ -348,7 +366,7 @@
         </details>
         <details class="faq__item">
           <summary>How does a project usually begin?</summary>
-          <p>With a conversation. We ask about your goals, users, timeline and constraints, then suggest a sensible next step — which might be a short discovery phase, a written proposal or simply some candid advice.</p>
+          <p>With a conversation. We ask about your goals, users, timeline and constraints, then suggest a sensible next step&nbsp;— which might be a short discovery phase, a written proposal or simply some candid advice.</p>
         </details>
         <details class="faq__item">
           <summary>How are projects priced?</summary>
@@ -360,7 +378,7 @@
         </details>
         <details class="faq__item">
           <summary>What should I include in my first message?</summary>
-          <p>A short description of what you want to achieve, who it is for, any systems already involved and your ideal timeline. Rough notes are perfectly fine — we’ll take it from there.</p>
+          <p>A short description of what you want to achieve, who it is for, any systems already involved and your ideal timeline. Rough notes are perfectly fine&nbsp;— we’ll take it from there.</p>
         </details>
       </div>
     </div>
@@ -371,17 +389,17 @@
     <div class="container contact">
       <div class="contact__intro">
         <p class="eyebrow eyebrow--on-dark reveal"><span class="eyebrow__index">07</span>Contact</p>
-        <h2 class="section-title reveal" id="contact-title">Let’s talk about what you’re building.</h2>
+        <h2 class="section-title" id="contact-title">Let’s talk about what you’re building.</h2>
         <p class="section-intro reveal">Whether you have a detailed brief, an early idea or a question about your current systems, we’d be glad to hear from you.</p>
 
-        <div class="contact__guide reveal">
-          <h3 class="contact__subhead">A helpful first message covers</h3>
-          <ul class="contact__checklist">
-            <li>What you want to achieve</li>
-            <li>Who it is for</li>
-            <li>Any existing systems or tools involved</li>
-            <li>Your ideal timeline</li>
-          </ul>
+
+        <div class="contact__next reveal">
+          <h3 class="contact__subhead">What happens next</h3>
+          <ol class="next-steps" role="list">
+            <li><span class="next-steps__index" aria-hidden="true">01</span>We review your message.</li>
+            <li><span class="next-steps__index" aria-hidden="true">02</span>We arrange a short call to understand your goals.</li>
+            <li><span class="next-steps__index" aria-hidden="true">03</span>We follow up with a recommended approach and next steps.</li>
+          </ol>
         </div>
 
         <div class="contact__direct reveal">
@@ -425,7 +443,7 @@
               <input class="field__input" id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="cf-email-error">
               <p class="field__error" id="cf-email-error" data-error></p>
             </div>
-            <div class="field" data-field="organization">
+            <div class="field field--full" data-field="organization">
               <label class="field__label" for="cf-organization">Company or organization <span class="field__optional">(optional)</span></label>
               <input class="field__input" id="cf-organization" name="organization" type="text" autocomplete="organization" maxlength="120">
             </div>
@@ -435,10 +453,20 @@
                 <option>New project</option>
                 <option>Website</option>
                 <option>Web or mobile application</option>
-                <option>Automation or integration</option>
+                <option>Automation, integration or AI</option>
                 <option>Technical consulting</option>
                 <option>Partnership</option>
                 <option>General question</option>
+              </select>
+            </div>
+            <div class="field" data-field="timeline">
+              <label class="field__label" for="cf-timeline">Ideal timeline <span class="field__optional">(optional)</span></label>
+              <select class="field__input field__select" id="cf-timeline" name="timeline">
+                <option value="">Not sure yet</option>
+                <option>As soon as possible</option>
+                <option>Within 1–3 months</option>
+                <option>In 3–6 months</option>
+                <option>Later&nbsp;— just exploring</option>
               </select>
             </div>
             <div class="field field--full" data-field="message">

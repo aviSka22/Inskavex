@@ -1,7 +1,7 @@
 # Testing Checklist and Report
 
 Results below were **actually run** in the cloud development environment on
-**2026-10-23** (Linux container, Node 22.22, headless Chromium 1243 via Playwright 1.63).
+**2026-10-23**, and re-run on **2026-10-24** after the motion and refinement pass, (Linux container, Node 22.22, headless Chromium 1243 via Playwright 1.63).
 
 **Labels:** **Automated** = scripted check · **Browser-tested** = run in a real
 (headless) Chromium · **Physical-device tested** · **Not tested** · **Blocked**
@@ -18,7 +18,7 @@ Nothing here has been deployed; there is no live URL.
 | Clean install (`npm ci`) | ✅ 0 vulnerabilities | Automated |
 | Production build (`npm run build`) | ✅ 3 pages, ~15 ms | Automated |
 | Static checks (`npm run check`) | ✅ 9 / 9 passed | Automated |
-| Browser tests (`npm run test:e2e`) | ✅ 48 / 48 passed | Browser-tested (Chromium) |
+| Browser tests (`npm run test:e2e`) | ✅ 52 / 52 passed | Browser-tested (Chromium) |
 | Accessibility — axe-core WCAG 2.2 A/AA + best practice | ✅ 0 violations (3 pages × 2 widths, open menu, form error & status states) | Browser-tested |
 | Lighthouse | ✅ see table below | Browser-tested (Chromium, local server) |
 | `npm run dev` (serves, rebuilds on change) | ✅ | Automated (curl) |
@@ -33,7 +33,7 @@ Nothing here has been deployed; there is no live URL.
 ```bash
 npm ci
 npm run check          # build + static checks
-npm run test:e2e       # 48 Playwright tests
+npm run test:e2e       # 52 Playwright tests
 npm test               # both of the above
 ```
 
@@ -46,10 +46,14 @@ Mobile = default emulated mobile with throttling; Desktop = `--preset=desktop`.
 
 | Page | Mode | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `/` | Mobile | **99** | **100** | **100** | **100** | 1.8 s | 0 | 40 ms |
+| `/` | Mobile | **98–99** (3 runs) | **100** | **100** | **100** | 1.8–2.0 s | 0 | 110–130 ms |
 | `/` | Desktop | **100** | **100** | **100** | **100** | 0.4 s | 0 | 0 ms |
-| `/privacy` | Mobile | **100** | **100** | **100** | **100** | 1.7 s | 0 | 0 ms |
+| `/privacy` | Mobile | **100** | **100** | **100** | **100** | 1.7 s | 0 | 20 ms |
 | `/privacy` | Desktop | **100** | **100** | **100** | **100** | 0.4 s | 0 | 0 ms |
+
+Home-page figures are from 2026-10-24, after the motion pass (before it: 99, TBT 40 ms).
+The hero animation does not delay LCP; the small TBT increase comes from the
+style work of the entrance animation on a throttled mobile CPU.
 
 Notes: the 404 page cannot be scored (Lighthouse refuses non-200 pages; it is covered by
 axe and Playwright). The local server does not compress responses; Cloudflare does, so
@@ -60,9 +64,9 @@ re-run with PageSpeed Insights after deploying.
 
 | File | Uncompressed | gzip -9 |
 | --- | --- | --- |
-| `index.html` (incl. inline SVG artwork, icons, logo) | 45 KB | 13 KB |
-| `styles.css` | 34 KB | 7 KB |
-| `main.js` | 10 KB | 3.5 KB |
+| `index.html` (incl. inline SVG artwork, icons, logo) | 54 KB | 14 KB |
+| `styles.css` | 40 KB | 8 KB |
+| `main.js` | 13 KB | 4.5 KB |
 | Fonts (already compressed woff2) | 48 KB + 12 KB | — |
 
 No raster images on the pages (all artwork is inline SVG) · **0 third-party requests**.
@@ -87,7 +91,8 @@ No raster images on the pages (all artwork is inline SVG) · **0 third-party req
 | 12 | Sitemap and robots.txt | Generated in `dist/`; served; contents checked; 404 excluded | ✅ | Automated |
 | 13 | No horizontal overflow | All 3 pages at 320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920 px — page width and every element’s bounds | ✅ | Browser-tested |
 | 14 | Keyboard navigation | Skip link first and functional; menu keyboard behavior; FAQ toggles with Enter; visible focus styles | ✅ | Browser-tested |
-| 15 | Reduced motion respected | With `reduce`: no reveal hiding, animation ≈ 0, `scroll-behavior: auto` | ✅ | Browser-tested |
+| 15 | Reduced motion respected | With `reduce`: no reveal hiding, animation ≈ 0, `scroll-behavior: auto`, headings not split, statement fully lit | ✅ | Browser-tested |
+| — | Motion completes correctly | After scrolling the whole page every revealed element is at full opacity and rest position; split headings keep their exact text; statement lights fully at the reading line; progress line reaches 100 % | ✅ | Browser-tested |
 | 16 | No secrets committed | Pattern scan of all tracked files and `dist/` | ✅ | Automated |
 | 17 | Cloudflare config matches stack | Build command/output verified locally; `_headers` parsed and applied by the preview server; CSP produces **zero** violations in tests | ✅ | Automated / Browser-tested |
 | 18 | Setup & deployment docs | `README.md`, `DEPLOYMENT.md`; commands executed as documented | ✅ | Automated |
@@ -112,6 +117,8 @@ Defects found and fixed during review:
 | Capability strip left dangling separators when wrapping; values row orphaned an item at 1024 px | Two/three-column grids below 80 em; explicit 2/4-column values grid |
 | “Fig. 01” caption wrapped on phones; OG headline crowded the artwork | `nowrap`; resized OG artwork |
 | html-validate: lowercase doctype, template whitespace; 404 description too short | Fixed in templates/build |
+| (2026-10-24) Mobile TBT rose to ~240 ms after adding 48 individually animated SVG tiles and a layout-reading reveal setup | Tiles grouped into 11 animated courses; reveal setup reads no layout (uses the observer's first callback) → TBT ~120 ms, Performance 98–99 |
+| (2026-10-24) Statement band left the right half empty on desktop; contact column duplicated FAQ content | Label moved to a left grid column; “helpful first message” list removed |
 
 ### Known limitations / not done
 
