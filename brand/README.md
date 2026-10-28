@@ -76,6 +76,14 @@ Print-ready file: [`print/texponex-business-card.pdf`](print/texponex-business-c
 | --- | --- |
 | ![Front](print/texponex-business-card-front-preview.png) | ![Back](print/texponex-business-card-back-preview.png) |
 
+Version B, same size and colors, adds the tagline on the front, line icons beside the
+contact details and a “Scan to visit” label above the QR code:
+[`print/texponex-business-card-b.pdf`](print/texponex-business-card-b.pdf)
+
+| Front (B) | Back (B) |
+| --- | --- |
+| ![Front, version B](print/texponex-business-card-b-front-preview.png) | ![Back, version B](print/texponex-business-card-b-back-preview.png) |
+
 **Specification**
 
 | | |
