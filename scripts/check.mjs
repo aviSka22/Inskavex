@@ -10,6 +10,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import zlib from 'node:zlib';
 import { launchIssues, loadConfig } from './lib/config.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -234,7 +235,7 @@ check(
     files = walk(path.join(ROOT, 'src'));
   }
   for (const file of files.concat(walk(DIST))) {
-    if (!fs.existsSync(file) || /\.(png|ico|woff2)$/.test(file) || file.endsWith('check.mjs')) continue;
+    if (!fs.existsSync(file) || /\.(png|ico|woff2|pdf)$/.test(file) || file.endsWith('check.mjs')) continue;
     const text = fs.readFileSync(file, 'utf8');
     for (const [pattern, label] of patterns) {
       if (pattern.test(text)) problems.push(`${path.relative(ROOT, file)}: possible ${label}`);
@@ -244,7 +245,60 @@ check(
   check('No secrets or credentials in the repository', problems);
 }
 
-// 9. Size budgets (uncompressed) ------------------------------------------------
+// 9. Brand kit and print files ------------------------------------------------
+{
+  const problems = [];
+  const KIT = path.join(ROOT, 'brand');
+  const expected = ['README.md', 'business-card.json', 'print/texponex-business-card.pdf'];
+  for (const kind of ['logo', 'symbol']) {
+    for (const colorway of ['color', 'reversed', 'black', 'white']) {
+      expected.push(`logo/svg/texponex-${kind}-${colorway}.svg`, `logo/pdf/texponex-${kind}-${colorway}-cmyk.pdf`);
+    }
+  }
+  for (const file of expected) if (!fs.existsSync(path.join(KIT, file))) problems.push(`brand/${file} is missing — run "npm run brand"`);
+
+  // Every PDF must use CMYK only (no RGB fill/stroke operators in any content stream).
+  const pdfs = expected.filter((file) => file.endsWith('.pdf')).map((file) => path.join(KIT, file)).filter(fs.existsSync);
+  for (const file of pdfs) {
+    const bytes = fs.readFileSync(file);
+    const text = bytes.toString('latin1');
+    for (const match of text.matchAll(/(?<!end)stream\n/g)) {
+      const start = match.index + match[0].length;
+      const end = text.indexOf('\nendstream', start);
+      let content;
+      try {
+        content = zlib.inflateSync(bytes.subarray(start, end)).toString('latin1');
+      } catch {
+        problems.push(`${path.relative(ROOT, file)}: unreadable content stream`);
+        continue;
+      }
+      if (/\s(rg|RG|sc|scn|SC|SCN)\s/.test(` ${content} `)) problems.push(`${path.relative(ROOT, file)}: uses non-CMYK color`);
+      if (!/\sk\s/.test(` ${content} `)) problems.push(`${path.relative(ROOT, file)}: no CMYK fill found`);
+    }
+  }
+
+  // Business card: 3.5 × 2 in trim (252 × 144 pt) inside a 3 mm bleed on every side.
+  const card = path.join(KIT, 'print/texponex-business-card.pdf');
+  if (fs.existsSync(card)) {
+    const text = fs.readFileSync(card, 'latin1');
+    const box = (name) => [...text.matchAll(new RegExp(`/${name} \\[([^\\]]+)\\]`, 'g'))].map((m) => m[1].trim().split(/\s+/).map(Number));
+    const trims = box('TrimBox');
+    const medias = box('MediaBox');
+    const bleed = (3 * 72) / 25.4;
+    if (trims.length !== 2) problems.push(`business card: expected 2 pages with a TrimBox, found ${trims.length}`);
+    trims.forEach(([x0, y0, x1, y1], index) => {
+      const [, , mw, mh] = medias[index] || [];
+      const near = (a, b) => Math.abs(a - b) < 0.05;
+      if (!near(x1 - x0, 252) || !near(y1 - y0, 144)) problems.push(`business card page ${index + 1}: trim is not 3.5 × 2 in`);
+      if (!near(x0, bleed) || !near(y0, bleed) || !near(mw - x1, bleed) || !near(mh - y1, bleed)) {
+        problems.push(`business card page ${index + 1}: bleed is not 3 mm on every side`);
+      }
+    });
+  }
+  check('Brand kit complete; print PDFs are CMYK; card is 3.5 × 2 in + 3 mm bleed', problems);
+}
+
+// 10. Size budgets (uncompressed) ------------------------------------------------
 {
   const budgets = { '.css': 60_000, '.js': 20_000, '.woff2': 80_000, '.html': 80_000 };
   const problems = [];

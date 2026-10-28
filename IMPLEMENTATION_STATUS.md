@@ -32,6 +32,10 @@ A stage is marked completed only when its acceptance criteria were checked (see
 | 18 Rebrand (2026-10-28) | 18.1 Rename to Texponex | ✅ | All copy, metadata, config, assets and docs; wordmark regenerated (artwork extended for the “p” descender); brand-spelling check enforces “Texponex” |
 | | 18.2 Domain & email | ✅ | `url: https://texponex.com`, `email: hello@texponex.com`; form in email mode; privacy notice updated |
 | | 18.3 Hosting on texponex.com | ⛔ | Needs your Cloudflare account — `DEPLOYMENT.md` |
+| 19 Final identity (2026-10-28) | 19.1 Logo redesign | ✅ | Primary logo “Texponex▪” (wordmark + exponent) and T-symbol replace the L-block mark, which read as “L Texponex”; variants compared at real sizes before choosing; real kerning |
+| | 19.2 Print-ready kit | ✅ | `brand/`: SVG, CMYK vector PDF and PNG in 4 colorways; avatars; overview sheet; guide (`brand/README.md`) |
+| | 19.3 Business card | ✅ | `brand/print/texponex-business-card.pdf` — 3.5 × 2 in, 3 mm bleed, CMYK, outlined text; details in `brand/business-card.json` (placeholders until you add your name/title) |
+| | 19.4 Website | ✅ | Header/footer logo, hero construction drawing (T + exponent), 404, favicon, app icons, OG image regenerated |
 | | 17.4 Competitor comparison | ⛔ | Reference sites could not be opened: `share.google`, `ranstacksolutions.com` and Arivora domains are blocked by this environment's network policy |
 
 ## External items (cannot be completed from this environment)

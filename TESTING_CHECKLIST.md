@@ -17,7 +17,7 @@ Nothing here has been deployed; there is no live URL.
 | --- | --- | --- |
 | Clean install (`npm ci`) | ✅ 0 vulnerabilities | Automated |
 | Production build (`npm run build`) | ✅ 3 pages, ~15 ms | Automated |
-| Static checks (`npm run check`) | ✅ 9 / 9 passed | Automated |
+| Static checks (`npm run check`) | ✅ 10 / 10 passed | Automated |
 | Browser tests (`npm run test:e2e`) | ✅ 53 / 53 passed | Browser-tested (Chromium) |
 | Accessibility — axe-core WCAG 2.2 A/AA + best practice | ✅ 0 violations (3 pages × 2 widths, open menu, form error & status states) | Browser-tested |
 | Lighthouse | ✅ see table below | Browser-tested (Chromium, local server) |
@@ -104,6 +104,7 @@ No raster images on the pages (all artwork is inline SVG) · **0 third-party req
 | — | Touch target size (WCAG 2.5.8) | All controls ≥ 24 × 24 px at 375 and 1440 px (most ≥ 44 px) | ✅ | Browser-tested |
 | — | Minimum text size | No visible text below 12 px at 320 px | ✅ | Browser-tested |
 | — | Brand spelling | Every variant of the name across repo and build must be “Texponex” | ✅ | Automated |
+| — | Print files | `check.mjs`: brand kit complete; every PDF content stream is CMYK-only (verified to catch an injected RGB operator); card TrimBox 252 × 144 pt with 3 mm bleed on both pages. Poppler (`pdfinfo`, `pdftoppm`) parses and renders every PDF | ✅ | Automated |
 | — | Config validation | Invalid `url`/email/endpoint fail the build with a clear message; `SITE_URL`/`ALLOW_INDEXING` overrides produce noindex + correct canonical | ✅ | Automated (manual run) |
 
 ### Visual review (screenshots inspected)
@@ -123,6 +124,7 @@ Defects found and fixed during review:
 | html-validate: lowercase doctype, template whitespace; 404 description too short | Fixed in templates/build |
 | (2026-10-24) Mobile TBT rose to ~240 ms after adding 48 individually animated SVG tiles and a layout-reading reveal setup | Tiles grouped into 11 animated courses; reveal setup reads no layout (uses the observer's first callback) → TBT ~120 ms, Performance 98–99 |
 | (2026-10-24) Statement band left the right half empty on desktop; contact column duplicated FAQ content | Label moved to a left grid column; “helpful first message” list removed |
+| (2026-10-28) The symbol (an L-block) read as a letter in front of the new name — “L Texponex” — on a card-size mock-up | Logo redesigned: wordmark with exponent + T-symbol, chosen from side-by-side variants at 16 px to card size |
 | (2026-10-28) The regenerated “Texponex” wordmark clipped the “p” descender (the previous name had no descenders, so the artwork ended at the baseline) | Logo generator now measures the deepest descender and extends the artwork (32 → 37.5 units); logo CSS heights scaled so the mark keeps its size |
 
 ### Known limitations / not done

@@ -26,43 +26,7 @@
       </div>
 
       <figure class="hero__art">
-        <svg class="hero-art" viewBox="0 0 560 560" aria-hidden="true" focusable="false">
-          <defs>
-            <pattern id="art-grid" width="52" height="52" x="24" y="120" patternUnits="userSpaceOnUse">
-              <path class="hero-art__grid" d="M52 0H0V52"/>
-            </pattern>
-            <pattern id="art-seams-next" width="52" height="52" x="328" y="24" patternUnits="userSpaceOnUse">
-              <path class="hero-art__seam-next" d="M0 0H52M0 0V52"/>
-            </pattern>
-          </defs>
-          <rect class="hero-art__grid-layer" width="560" height="560" fill="url(#art-grid)"/>
-          <!-- What has been built: the block, minus one quadrant, tile by tile. -->
-          <g transform="translate(24 24)">
-            <g class="hero-art__course dl-0"><rect class="hero-art__tile" x="2" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-1"><rect class="hero-art__tile" x="2" y="410" width="48" height="48"/><rect class="hero-art__tile" x="54" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-2"><rect class="hero-art__tile hero-art__tile--lit" x="2" y="358" width="48" height="48"/><rect class="hero-art__tile" x="54" y="410" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--deep" x="106" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-3"><rect class="hero-art__tile" x="2" y="306" width="48" height="48"/><rect class="hero-art__tile" x="54" y="358" width="48" height="48"/><rect class="hero-art__tile" x="106" y="410" width="48" height="48"/><rect class="hero-art__tile" x="158" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-4"><rect class="hero-art__tile" x="2" y="254" width="48" height="48"/><rect class="hero-art__tile" x="54" y="306" width="48" height="48"/><rect class="hero-art__tile" x="106" y="358" width="48" height="48"/><rect class="hero-art__tile" x="158" y="410" width="48" height="48"/><rect class="hero-art__tile" x="210" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-5"><rect class="hero-art__tile" x="2" y="202" width="48" height="48"/><rect class="hero-art__tile" x="54" y="254" width="48" height="48"/><rect class="hero-art__tile" x="106" y="306" width="48" height="48"/><rect class="hero-art__tile" x="158" y="358" width="48" height="48"/><rect class="hero-art__tile" x="210" y="410" width="48" height="48"/><rect class="hero-art__tile" x="262" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-6"><rect class="hero-art__tile" x="2" y="150" width="48" height="48"/><rect class="hero-art__tile" x="54" y="202" width="48" height="48"/><rect class="hero-art__tile" x="106" y="254" width="48" height="48"/><rect class="hero-art__tile" x="158" y="306" width="48" height="48"/><rect class="hero-art__tile" x="210" y="358" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="262" y="410" width="48" height="48"/><rect class="hero-art__tile" x="314" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-7"><rect class="hero-art__tile" x="2" y="98" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="54" y="150" width="48" height="48"/><rect class="hero-art__tile" x="106" y="202" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="158" y="254" width="48" height="48"/><rect class="hero-art__tile" x="210" y="306" width="48" height="48"/><rect class="hero-art__tile" x="262" y="358" width="48" height="48"/><rect class="hero-art__tile" x="314" y="410" width="48" height="48"/><rect class="hero-art__tile" x="366" y="462" width="48" height="48"/></g>
-            <g class="hero-art__course dl-8"><rect class="hero-art__tile" x="54" y="98" width="48" height="48"/><rect class="hero-art__tile" x="106" y="150" width="48" height="48"/><rect class="hero-art__tile" x="158" y="202" width="48" height="48"/><rect class="hero-art__tile" x="262" y="306" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--deep" x="314" y="358" width="48" height="48"/><rect class="hero-art__tile" x="366" y="410" width="48" height="48"/></g>
-            <g class="hero-art__course dl-9"><rect class="hero-art__tile" x="106" y="98" width="48" height="48"/><rect class="hero-art__tile" x="158" y="150" width="48" height="48"/><rect class="hero-art__tile" x="314" y="306" width="48" height="48"/><rect class="hero-art__tile" x="366" y="358" width="48" height="48"/></g>
-            <g class="hero-art__course dl-10"><rect class="hero-art__tile" x="158" y="98" width="48" height="48"/><rect class="hero-art__tile hero-art__tile--lit" x="366" y="306" width="48" height="48"/></g>
-          </g>
-          <g transform="translate(24 24)">
-            <!-- Where the next piece goes. -->
-            <rect class="hero-art__slot" x="209" y="97" width="206" height="206"/>
-            <path class="hero-art__marks" d="M202 96h-8M208 90v-8M422 304h8M416 310v8M202 304h-8M208 310v8"/>
-            <path class="hero-art__path" d="M300 212 222 290"/>
-            <path class="hero-art__arrow" d="M222 274v16h16"/>
-          </g>
-          <!-- The next piece. -->
-          <g class="hero-art__next">
-            <rect class="hero-art__next-block" x="328" y="24" width="208" height="208"/>
-            <rect x="328" y="24" width="208" height="208" fill="url(#art-seams-next)"/>
-          </g>
-        </svg>
+        {{> hero-art}}
         <figcaption class="hero__caption"><span>Fig. 01</span> The next piece&nbsp;— planned before it’s&nbsp;placed.</figcaption>
       </figure>
     </div>

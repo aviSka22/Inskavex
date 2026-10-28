@@ -5,23 +5,24 @@ properties at the top of [`src/assets/css/styles.css`](src/assets/css/styles.css
 
 ---
 
-## 1. Concept — “the next piece”
+## 1. Concept — “to the power of next”
 
-The Texponex mark is a solid block with its top-right quadrant lifted out and
-offset up and to the right, in the accent color. It reads as *what has been built*
-and *the next piece, about to be placed* — a direct expression of
-“Building What’s Next” and of careful, incremental engineering.
+The name reads *T-expon-ex*. The identity makes that literal: a small ember square
+set like a mathematical **exponent** — on the wordmark (“Texponex▪”) and on the
+symbol (a T with the same exponent). It stands for *the next piece*, placed with
+intent: growth built on solid, modular foundations — “Building What’s Next”.
+The full logo system and print kit are in [`brand/`](brand/README.md).
 
 The concept is reused deliberately, never decoratively:
 
 | Where | How |
 | --- | --- |
-| Logo & favicon | The mark itself |
-| Hero artwork | The mark drawn as a tiled construction plan: built tiles, a dashed slot, the ember piece and a placement arrow (“Fig. 01”) |
+| Logo, symbol & favicon | The exponent itself |
+| Hero artwork | The symbol drawn as a tiled construction plan: the T assembles, guides show the exponent rule, then the ember piece is placed (“Fig. 01”) |
 | Bullets, eyebrows, footer tagline | A small ember square (`.mark-dot`) |
 | Focus-area icons | Each custom icon contains one solid ember “next piece” |
-| 404 page | The block with the piece missing: “This piece is missing.” |
-| OG image | Headline + the mark at large scale |
+| 404 page | The T with its exponent missing: “This piece is missing.” |
+| OG image | Logo, headline and the symbol’s construction drawing |
 
 ### What the design avoids (by intent)
 
@@ -35,19 +36,26 @@ hairline rules, a 12-column grid and whitespace.
 
 | Asset | File |
 | --- | --- |
-| Lockup, for light backgrounds | `src/public/brand/texponex-logo.svg` |
-| Lockup, for dark backgrounds | `src/public/brand/texponex-logo-light.svg` |
-| Mark only (SVG / PNG 512) | `src/public/brand/texponex-mark.svg`, `texponex-mark.png` |
+| Asset | File |
+| --- | --- |
+| Primary logo, light / dark backgrounds | `src/public/brand/texponex-logo.svg`, `texponex-logo-light.svg` |
+| Symbol (SVG / PNG 512) | `src/public/brand/texponex-mark.svg`, `texponex-mark.png` |
 | Inline (site header/footer) | `src/partials/logo.html` (uses `currentColor`) |
+| Hero artwork | `src/partials/hero-art.html` |
 | Favicon (adapts to dark tabs) | `src/public/favicon.svg`, `favicon.ico` |
 | App icons | `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` |
+| **Print & everything else** | **`brand/`** — SVG, CMYK vector PDF and PNG in four colorways, business card, avatars, guide |
 
-- Wordmark: Archivo, width 112 %, weight 640, tracking −0.012 em, outlined to SVG paths
-  (no font dependency). Cap height = 20/32 of the mark height.
-- Clear space: at least the width of the ember square on every side.
-- Minimum size: mark 16 px; lockup 96 px wide.
-- Do not recolor the ember square, stretch, rotate, or add effects.
-- Regenerate: `python3 scripts/brand/build_logo.py` then `npm run assets:images`.
+- **Wordmark:** Archivo, width 112 %, weight 640, tracking −0.012 em, real font
+  kerning (HarfBuzz), outlined to paths — no font dependency anywhere.
+- **Exponent rule:** side 0.46 × cap height, centered on the cap line, 0.125 × cap
+  height from the last letter. The symbol uses the same rule on a 3-unit grid
+  (T: bar 9t × 3t, stem 3t × 6t; exponent 4t; gap 1t).
+- **Clear space:** one exponent width on every side. **Minimum size:** logo 25 mm /
+  100 px wide; symbol 6 mm / 16 px.
+- Do not recolor the square, stretch, rotate, retype, or add effects.
+- **Regenerate everything:** `npm run brand` (`scripts/brand/brand.py` +
+  `scripts/brand/render-images.mjs`). Never edit the generated files by hand.
 
 ---
 

@@ -2,7 +2,7 @@
   "name": "texponex-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Official website of Texponex — static site for Cloudflare Pages.",
+  "description": "Official website of Texponex \u2014 static site for Cloudflare Pages.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -15,7 +15,7 @@
     "check:launch": "node scripts/check.mjs --launch",
     "test": "npm run check && playwright test",
     "test:e2e": "playwright test",
-    "assets:images": "node scripts/brand/render-images.mjs"
+    "brand": "python3 scripts/brand/brand.py && node scripts/brand/render-images.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

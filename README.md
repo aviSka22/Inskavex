@@ -205,10 +205,16 @@ tests/site.spec.mjs      Playwright browser tests
 | Form says “not sent” on the live site | `contact.formEndpoint` is not set — see *Connect the contact form* |
 | Opening `dist/index.html` directly shows unstyled pages | Use `npm run preview`; the site uses root-relative paths and must be served |
 
-## 12. Regenerating brand assets (rarely needed)
+## 12. Logo, brand kit and business cards
+
+The logo files for print, documents and social media — including CMYK vector PDFs
+and a print-ready business card — are in **[`brand/`](brand/README.md)**, with a
+guide to which file to use where.
+
+To regenerate the logo everywhere (website and kit), e.g. after editing the card
+details in `brand/business-card.json`:
 
 ```bash
-pip install fonttools brotli
-python3 scripts/brand/build_logo.py   # logo SVGs, favicon.svg, inline logo partial
-npm run assets:images                 # OG image, app icons, favicon.ico (needs Playwright Chromium)
+pip install fonttools brotli uharfbuzz   # once
+npm run brand                            # needs Playwright Chromium for the PNGs
 ```
