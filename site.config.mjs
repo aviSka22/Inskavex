@@ -27,7 +27,7 @@ export default {
   allowIndexing: true,
 
   description:
-    'Texponex designs and builds websites, web and mobile applications, and system integrations — practical, well-engineered software made to be maintained.',
+    'Texponex designs, engineers and delivers custom software across web, mobile, desktop and enterprise platforms — tailored to the needs of every business.',
 
   contact: {
     // Official business email. Shown in the contact section, footer and privacy

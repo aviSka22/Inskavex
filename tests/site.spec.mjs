@@ -59,7 +59,7 @@ test.describe('Pages and content', () => {
     await expect(page.locator('.statement')).toBeVisible();
     await expect(page.locator('.standards__list li')).toHaveCount(6);
     await expect(page.locator('h1')).toContainText('Building what’s next');
-    await expect(page.locator('.service')).toHaveCount(6);
+    await expect(page.locator('.service')).toHaveCount(8);
     await expect(page.locator('.step')).toHaveCount(6);
     await expect(page.locator('.focus__item')).toHaveCount(6);
     await expect(page.locator('.principle')).toHaveCount(6);

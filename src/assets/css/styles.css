@@ -703,19 +703,7 @@ main:focus { outline: none; }
     align-items: center;
   }
   .hero__capabilities-label { grid-column: span 2; }
-  .hero__capabilities ul { grid-column: 3 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-@media (min-width: 80em) {
-  .hero__capabilities ul { display: flex; flex-wrap: wrap; gap: var(--space-2) 0; }
-  .hero__capabilities li::before { display: none; }
-  .hero__capabilities li:not(:last-child)::after {
-    content: "";
-    width: 4px;
-    height: 4px;
-    margin-inline: var(--space-4);
-    background: var(--ink-500);
-  }
+  .hero__capabilities ul { grid-column: 3 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 /* About -------------------------------------------------------------------- */
