@@ -1,0 +1,17 @@
+// Cloudflare deployment settings for the Workers "static assets" setup
+// (dashboard → Workers & Pages → Create → Import a repository).
+// The website is entirely static: `npm run build` writes it to dist/, and
+// `npx wrangler deploy` uploads that folder. No server code runs.
+// Cloudflare Pages ignores this file, so either setup works.
+{
+  // Must match the project (Worker) name chosen in the Cloudflare dashboard.
+  "name": "texponex",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Unknown URLs get dist/404.html with a real 404 status.
+    "not_found_handling": "404-page",
+    // /privacy serves privacy.html; /privacy.html redirects to /privacy.
+    "html_handling": "auto-trailing-slash"
+  }
+}

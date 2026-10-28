@@ -37,29 +37,28 @@ Content Security Policy, long-term caching for fingerprinted assets), `sitemap.x
    from it: **Code → Branches → New branch** → name `main`, source
    `ccr-9a63c2ce-k1gq04`; then **Settings → General → Default branch** → `main`.
 
-## Step 2 — Create the Pages project
+## Step 2 — Create the project (done on 2026-10-28)
 
-1. Cloudflare dashboard → **Workers & Pages → Create** → **Pages** tab →
-   **Connect to Git** (if *Create* opens a Workers screen, choose the Pages option).
-2. Authorize the Cloudflare GitHub app for **this repository only**.
-3. Select the repository and set:
-   - **Project name:** `texponex`
-   - **Production branch:** `main` (or `ccr-9a63c2ce-k1gq04` if you skipped Step 1.2)
-   - **Framework preset:** None · **Build command:** `npm run build` · **Build output directory:** `dist`
-4. **Save and Deploy.** The build log should end with
-   `Built 3 pages into dist/ in … (site URL: https://texponex.com)`.
+The site was deployed with Cloudflare’s current **Workers** setup
+(Workers & Pages → Create → Import a repository), project name **`texponex`**,
+build command `npm run build`, deploy command `npx wrangler deploy`. The repository’s
+[`wrangler.jsonc`](wrangler.jsonc) tells Cloudflare to serve `dist/` with the custom
+404 page and clean URLs; its `name` must stay `texponex`. Temporary address:
+`https://texponex.skandaavin.workers.dev`.
 
-Cloudflare gives the project a `https://texponex.pages.dev` address (or similar).
-Open it once to confirm the site loads; the real domain comes next.
+(The older **Pages** flow also works: Framework preset *None*, build command
+`npm run build`, output directory `dist`. Pages ignores `wrangler.jsonc`.)
+
+Every push to `main` now builds and deploys automatically.
 
 ## Step 3 — Connect `texponex.com`
 
-1. **Workers & Pages → texponex → Custom domains → Set up a custom domain**.
-2. Enter `texponex.com` → **Continue** → **Activate domain**. Because the domain is on
-   Cloudflare, the DNS record is created for you — do not add one by hand.
+1. **Workers & Pages → texponex → Settings → Domains & Routes → + Add → Custom domain**.
+2. Enter `texponex.com` → **Add domain**. Because the domain is on Cloudflare, the DNS
+   record and HTTPS certificate are created for you — do not add DNS records by hand.
 3. Repeat for `www.texponex.com`.
-4. Wait until both show **Active** (usually a few minutes). HTTPS certificates are
-   issued automatically.
+4. Wait a few minutes. If a phone still shows *DNS_PROBE_FINISHED_NXDOMAIN*, it is a
+   cached “no such site” answer: toggle airplane mode or try an incognito tab.
 
 ## Step 4 — Redirects and HTTPS
 
@@ -150,7 +149,8 @@ branches create preview deployments, which Cloudflare marks `noindex`.
 | --- | --- | --- |
 | Domain `texponex.com` | Cloudflare Registrar | ✅ Purchased |
 | Business email `hello@texponex.com` | `contact.email` | ✅ Configured in the site — confirm the mailbox receives mail (Step 5) |
-| Pages project, custom domain, redirects | Steps 2–4 | **To do** (needs your Cloudflare account) |
+| Cloudflare project & first deployment | Step 2 | ✅ Live at `texponex.skandaavin.workers.dev` |
+| Custom domain, redirects | Steps 3–4 | **To do** |
 | Contact-form endpoint | `contact.formEndpoint` (Step 6) | Not configured — email fallback active |
 | Legal entity name (if different from “Texponex”) | `legal.entityName` | Not configured (brand name used) |
 | Privacy notice reviewed by the company | `src/pages/privacy.html` | **Needs review** |
