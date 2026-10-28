@@ -76,14 +76,6 @@ Print-ready file: [`print/texponex-business-card.pdf`](print/texponex-business-c
 | --- | --- |
 | ![Front](print/texponex-business-card-front-preview.png) | ![Back](print/texponex-business-card-back-preview.png) |
 
-Version B, same size and colors, adds the tagline on the front, line icons beside the
-contact details and a short ember rule under the title:
-[`print/texponex-business-card-b.pdf`](print/texponex-business-card-b.pdf)
-
-| Front (B) | Back (B) |
-| --- | --- |
-| ![Front, version B](print/texponex-business-card-b-front-preview.png) | ![Back, version B](print/texponex-business-card-b-back-preview.png) |
-
 **Specification**
 
 | | |
@@ -93,7 +85,8 @@ contact details and a short ember rule under the title:
 | Safe area | Text and logo at least 5 mm inside the trim edge |
 | Color | CMYK; front background rich black C60 M40 Y40 K100; ember C0 M65 Y81 K0 |
 | Text | Converted to outlines — no fonts needed by the printer |
-| QR code | Back, bottom-right, 14 mm, black (K100) only, links to `https://texponex.com`; quiet zone kept clear; verified to decode from the print file |
+| Back | Name and title, a short ember rule, then phone, email and website, each with a line icon in ember (0.7 pt) |
+| QR code | Back, bottom-right, 14 mm, black (K100) only, links to `https://www.texponex.com`; quiet zone kept clear; verified to decode from the print file |
 | Boxes | PDF TrimBox and BleedBox are set; no crop marks (most printers prefer this) |
 
 **Put your details on the card — privately**

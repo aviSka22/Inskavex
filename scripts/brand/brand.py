@@ -12,8 +12,7 @@ Brand kit (brand/):
     logo/pdf/*.pdf                    the same as CMYK vector PDFs (print)
     print/texponex-business-card.pdf  print-ready card, 3.5 × 2 in + 3 mm bleed,
                                       all text outlined; text from brand/business-card.json
-    print/texponex-business-card-b.pdf  version B: tagline front, icon-led contact lines
-    print/private/…                   your personal cards, from brand/business-card.local.json
+    print/private/…                   your personal card, from brand/business-card.local.json
                                       (git-ignored, so personal details stay out of the repository)
 PNG exports are rendered afterwards by scripts/brand/render-images.mjs.
 
@@ -271,51 +270,6 @@ def logo_pdf(path, logo, ink_cmyk, accent_cmyk, width_mm, title):
 CARD_W, CARD_H, BLEED, SAFE = 252.0, 144.0, 3 * MM, 5 * MM
 
 
-def business_card(path, details, logo, mark):
-    W, H = CARD_W + 2 * BLEED, CARD_H + 2 * BLEED
-    trim = (BLEED, BLEED, BLEED + CARD_W, BLEED + CARD_H)
-    left, top = BLEED + SAFE + 2 * MM, BLEED + SAFE + 2 * MM
-    right, bottom = BLEED + CARD_W - SAFE - 2 * MM, BLEED + CARD_H - SAFE - 2 * MM
-
-    # Front: rich black, primary logo knocked out, optically centered.
-    front = pdf_fill(rect(0, 0, W, H), CMYK_RICH_BLACK)
-    scale = 46 * MM / logo["width"]
-    lx = (W - logo["width"] * scale) / 2
-    ly = (H - logo["height"] * scale) / 2 - 1.5 * MM
-    front += pdf_fill(logo["ink"], CMYK_PAPER, scale=scale, dx=lx, dy=ly)
-    front += pdf_fill(logo["accent"], CMYK_EMBER, scale=scale, dx=lx, dy=ly)
-
-    # Back: paper, details set in Archivo, symbol top-right.
-    back = ""
-    name_ops, *_ = shape(details["name"], size=10.5, wght=620, wdth=104, x=left, baseline=top + 7.5)
-    back += pdf_fill(name_ops, CMYK_BLACK)
-    title_ops, *_ = shape(details["title"], size=7.5, wght=420, wdth=100, x=left, baseline=top + 18)
-    back += pdf_fill(title_ops, CMYK_GREY)
-
-    lines = [details.get("phone", ""), details["email"], details["website"]]
-    lines = [line for line in lines if line]
-    for index, line in enumerate(reversed(lines)):
-        ops, *_ = shape(line, size=7.5, wght=480, wdth=100, x=left, baseline=bottom - index * 11)
-        back += pdf_fill(ops, CMYK_BLACK)
-
-    # QR code to the website, bottom-right, sitting on the last text baseline.
-    # K100 only for a crisp single-plate print; the 4-module quiet zone falls
-    # inside the card's blank margin.
-    if details.get("qr"):
-        size = QR_SIZE_MM * MM
-        back += pdf_fill(qr_ops(details["qr"], size), CMYK_BLACK, dx=right - size, dy=bottom - size)
-
-    m_scale = 9 * MM / mark["width"]
-    mx = right - mark["width"] * m_scale
-    back += pdf_fill(mark["ink"], CMYK_BLACK, scale=m_scale, dx=mx, dy=top - 1)
-    back += pdf_fill(mark["accent"], CMYK_EMBER, scale=m_scale, dx=mx, dy=top - 1)
-
-    write_pdf(path, [
-        {"size": (W, H), "content": front, "trim": trim},
-        {"size": (W, H), "content": back, "trim": trim},
-    ], f"{NAME} business card")
-
-
 def pdf_stroke(ops, cmyk, width):
     c, m, y, k = cmyk
     return f"{c:g} {m:g} {y:g} {k:g} K\n{width:g} w 0 J 0 j\n{pdf_path(ops)}\nS\n"
@@ -348,30 +302,22 @@ def contact_icon(kind, x, y):
     return circle(x + c, y + c, r) + circle(x + c, y + c, 1.3, r) + [("M", x + e, y + c), ("L", x + ICON - e, y + c)]
 
 
-def business_card_v2(path, details, logo, mark):
-    """Alternative card: tagline on the front; icon-led contact details on the
-    back. Same size, colors, margins and QR code as the original."""
+def business_card(path, details, logo, mark):
     W, H = CARD_W + 2 * BLEED, CARD_H + 2 * BLEED
     trim = (BLEED, BLEED, BLEED + CARD_W, BLEED + CARD_H)
     left, top = BLEED + SAFE + 2 * MM, BLEED + SAFE + 2 * MM
     right, bottom = BLEED + CARD_W - SAFE - 2 * MM, BLEED + CARD_H - SAFE - 2 * MM
 
-    # Front: logo and tagline, centered as one group.
+    # Front: rich black, primary logo knocked out, optically centered.
     front = pdf_fill(rect(0, 0, W, H), CMYK_RICH_BLACK)
-    scale = 44 * MM / logo["width"]
-    tag_ops, tag_w, *_ = shape("BUILDING WHAT’S NEXT", size=5.6, wght=560, wdth=112, tracking=0.2)
-    gap, tag_cap = 5 * MM, 5.6 * 0.7
-    group_h = logo["height"] * scale + gap + tag_cap
+    scale = 46 * MM / logo["width"]
     lx = (W - logo["width"] * scale) / 2
-    ly = (H - group_h) / 2
+    ly = (H - logo["height"] * scale) / 2 - 1.5 * MM
     front += pdf_fill(logo["ink"], CMYK_PAPER, scale=scale, dx=lx, dy=ly)
     front += pdf_fill(logo["accent"], CMYK_EMBER, scale=scale, dx=lx, dy=ly)
-    # The tagline centers under the wordmark itself (the exponent sits outside it).
-    word_w = (logo["width"] - EXP_SIDE - EXP_GAP) * scale
-    tag_x = lx + (word_w - tag_w) / 2
-    front += pdf_fill(tag_ops, CMYK_PAPER, dx=tag_x, dy=ly + logo["height"] * scale + gap + tag_cap)
 
-    # Back: name and title, an ember rule, then icon-led contact lines.
+    # Back: name and title, a short ember rule, icon-led contact lines and the
+    # symbol top-right.
     back = ""
     name_ops, *_ = shape(details["name"], size=11, wght=620, wdth=104, x=left, baseline=top + 8)
     back += pdf_fill(name_ops, CMYK_BLACK)
@@ -387,6 +333,9 @@ def business_card_v2(path, details, logo, mark):
         ops, *_ = shape(text, size=7.5, wght=480, wdth=100, x=left + ICON + 4.5, baseline=baseline)
         back += pdf_fill(ops, CMYK_BLACK)
 
+    # QR code to the website, bottom-right, sitting on the last text baseline.
+    # K100 only for a crisp single-plate print; the 4-module quiet zone falls
+    # inside the card's blank margin.
     if details.get("qr"):
         size = QR_SIZE_MM * MM
         back += pdf_fill(qr_ops(details["qr"], size), CMYK_BLACK, dx=right - size, dy=bottom - size)
@@ -399,7 +348,7 @@ def business_card_v2(path, details, logo, mark):
     write_pdf(path, [
         {"size": (W, H), "content": front, "trim": trim},
         {"size": (W, H), "content": back, "trim": trim},
-    ], f"{NAME} business card (version B)")
+    ], f"{NAME} business card")
 
 
 QR_SIZE_MM = 14  # symbol only; plus a 4-module quiet zone of blank paper
@@ -487,15 +436,14 @@ def main():
         cards.append(({**cards[0][0], **json.loads(local_file.read_text())}, private))
 
     for details, directory in cards:
-        for name, build in (("texponex-business-card", business_card), ("texponex-business-card-b", business_card_v2)):
-            card = directory / f"{name}.pdf"
-            build(card, details, logo, mark)
-            if shutil.which("pdftoppm"):  # previews (poppler)
-                for page, side in ((1, "front"), (2, "back")):
-                    stem = directory / f"{name}-{side}-preview"
-                    subprocess.run(["pdftoppm", "-png", "-r", "300", "-f", str(page), "-l", str(page), "-singlefile",
-                                    str(card), str(stem)], check=True)
-            print(f"Business card written: {card.relative_to(ROOT)}")
+        card = directory / "texponex-business-card.pdf"
+        business_card(card, details, logo, mark)
+        if shutil.which("pdftoppm"):  # previews (poppler)
+            for page, side in ((1, "front"), (2, "back")):
+                stem = directory / f"texponex-business-card-{side}-preview"
+                subprocess.run(["pdftoppm", "-png", "-r", "300", "-f", str(page), "-l", str(page), "-singlefile",
+                                str(card), str(stem)], check=True)
+        print(f"Business card written: {card.relative_to(ROOT)}")
 
     print(f"Primary logo {logo['width']} × {logo['height']} units; symbol {SYMBOL_W} × {SYMBOL_H}.")
     print("Website assets and brand kit written (brand/). Next: node scripts/brand/render-images.mjs")
