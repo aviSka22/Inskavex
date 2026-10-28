@@ -85,8 +85,7 @@ Full detail in [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md).
 
 - **Concept — “the next piece”.** The brand mark is a solid block with one quadrant
   lifted out and offset: what has been built, and the next piece about to be placed.
-  The hero shows the work itself instead: a web app, a mobile app and the integration
-  that connects them.
+  The hero shows the symbol itself, alone, beside the headline.
 - **Palette:** warm near-black “ink”, bone-white “paper”, and a single vermilion
   “ember” accent used sparingly (mark, focus rings, numerals, key rules).
 - **Theme:** deliberate combination — dark ink for hero, approach and contact;

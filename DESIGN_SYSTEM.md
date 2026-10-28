@@ -18,7 +18,7 @@ The concept is reused deliberately, never decoratively:
 | Where | How |
 | --- | --- |
 | Logo, symbol & favicon | The exponent itself |
-| Hero illustration | Not the motif: an illustrative product composition — a web app dashboard, a mobile app and an integration log joined by an API — showing what the hero sentence says the company builds. Generic interface only: no client, product or real data |
+| Hero mark | The symbol on its own (bone T, ember exponent) beside the headline on wide screens; hidden on small screens, where the header logo is enough |
 | Bullets, eyebrows, footer tagline | A small ember square (`.mark-dot`) |
 | Focus-area icons | Each custom icon contains one solid ember “next piece” |
 | 404 page | The T with its exponent missing: “This piece is missing.” |
@@ -41,7 +41,7 @@ hairline rules, a 12-column grid and whitespace.
 | Primary logo, light / dark backgrounds | `src/public/brand/texponex-logo.svg`, `texponex-logo-light.svg` |
 | Symbol (SVG / PNG 512) | `src/public/brand/texponex-mark.svg`, `texponex-mark.png` |
 | Inline (site header/footer) | `src/partials/logo.html` (uses `currentColor`) |
-| Hero illustration | `src/partials/hero-art.html` (hand-written SVG; edit directly) |
+| Hero mark | `src/partials/hero-art.html` (symbol geometry from `scripts/brand/brand.py`) |
 | Favicon (adapts to dark tabs) | `src/public/favicon.svg`, `favicon.ico` |
 | App icons | `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` |
 | **Print & everything else** | **`brand/`** — SVG, CMYK vector PDF and PNG in four colorways, business card, avatars, guide |
@@ -65,7 +65,7 @@ hairline rules, a 12-column grid and whitespace.
 | --- | --- | --- |
 | `--ink-950` | `#0E0F0D` | Dark background, primary text on light |
 | `--ink-900` | `#151713` | Raised dark surface (form panel) |
-| `--ink-800` | `#1C1F1A` | Cards in the hero illustration |
+| `--ink-800` | `#1C1F1A` | Raised dark surfaces |
 | `--ink-700` | `#262A23` | Dark hairlines |
 | `--ink-600` | `#3A3E36` | Dark dividers |
 | `--ink-500` | `#6E7367` | Form-field borders on dark (≥ 3:1) |
@@ -129,7 +129,7 @@ Headings use `text-wrap: balance`; paragraphs `text-wrap: pretty`. Reading width
 - Grid: 12 columns, gap `clamp(1rem, 0.5rem + 2vw, 2.5rem)`, from 56 em.
 - Breakpoints (content-driven): **40 em** (640 px) two-column lists & form;
   **56 em** (896 px) split headings, services table; **64 em** (1024 px) desktop
-  navigation, two-column sections & three-column technology grid; **80 em**
+  navigation, two-column sections & hero mark; **80 em**
   (1280 px) four-column service rows, single-line capability strip.
 - Header height token `--header-height` (68 / 76 px) drives `scroll-padding-top`,
   so anchor targets never sit under the sticky header.
@@ -150,7 +150,7 @@ and nothing loops or moves on its own after it has arrived.
 | Moment | Motion | Implementation |
 | --- | --- | --- |
 | Hero load | Eyebrow, then headline rises word by word from a mask; lead and buttons follow | CSS keyframes; words pre-split in HTML (`.w`) |
-| Hero load | The browser window rises in, then the phone and the integration log; the chart line draws and the log’s steps complete one by one | CSS keyframes on a few SVG groups (kept few to hold main-thread cost low) |
+| Hero load | The symbol fades in, then its exponent settles into place | Two CSS keyframes on the inline SVG |
 | Hero load | Capability strip items rise in sequence | CSS, `.dl-n` delay classes |
 | Section titles | Rise word by word as they enter | `main.js` splits words; CSS transitions |
 | Content blocks | Fade-and-rise; items arriving together are staggered in reading order | IntersectionObserver assigns `--dl` |

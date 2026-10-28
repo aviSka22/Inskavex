@@ -430,7 +430,7 @@ test.describe('Motion and progressive enhancement', () => {
     expect(await page.evaluate(() => document.documentElement.classList.contains('motion-ready'))).toBe(false);
     const opacity = await page.locator('#why .principle').last().evaluate((el) => getComputedStyle(el).opacity);
     expect(opacity).toBe('1');
-    const duration = await page.locator('.hero-art__phone').evaluate((el) => parseFloat(getComputedStyle(el).animationDuration));
+    const duration = await page.locator('.hero-mark__next').evaluate((el) => parseFloat(getComputedStyle(el).animationDuration));
     expect(duration).toBeLessThan(0.01);
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
     // Without motion, headings are not split and the statement is fully lit.
