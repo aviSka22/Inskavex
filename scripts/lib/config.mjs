@@ -42,6 +42,11 @@ export function loadConfig(env = process.env) {
     }
   }
 
+  const updated = String(config.legal.privacyLastUpdated);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(updated) || Number.isNaN(Date.parse(`${updated}T00:00:00Z`))) {
+    errors.push(`legal.privacyLastUpdated must be a date like 2026-10-28, got "${updated}"`);
+  }
+
   if (errors.length) {
     throw new Error(`Invalid site configuration:\n  - ${errors.join('\n  - ')}`);
   }
@@ -61,6 +66,10 @@ export function loadConfig(env = process.env) {
     legal: {
       ...config.legal,
       entity: config.legal.entityName || config.name,
+      // e.g. "October 28, 2026" for display; the ISO date stays in <time datetime>.
+      privacyLastUpdatedLabel: new Date(`${config.legal.privacyLastUpdated}T00:00:00Z`).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+      }),
     },
     year: String(now.getFullYear()),
     buildDate: now.toISOString().slice(0, 10),
@@ -72,7 +81,11 @@ export function loadConfig(env = process.env) {
 export function launchIssues(config) {
   const issues = [];
   if (!config.contact.emailEnabled) issues.push('contact.email is empty — no business email is published.');
-  if (!config.contact.formEnabled) issues.push('contact.formEndpoint is empty — the contact form cannot deliver messages.');
+  if (!config.contact.formEnabled) {
+    issues.push(config.contact.emailEnabled
+      ? 'contact.formEndpoint is empty — optional: the form opens the visitor’s email app instead of sending directly.'
+      : 'contact.formEndpoint is empty — the contact form cannot deliver messages.');
+  }
   if (config.contact.formEnabled && !config.contact.formProviderName) {
     issues.push('contact.formProviderName is empty — the privacy notice cannot name the form provider.');
   }

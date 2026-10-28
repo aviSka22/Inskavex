@@ -14,7 +14,7 @@
     <div class="container">
       <p class="eyebrow eyebrow--on-dark"><span class="mark-dot" aria-hidden="true"></span>Legal</p>
       <h1 class="doc-hero__title">Privacy notice</h1>
-      <p class="doc-hero__meta">Last updated <time datetime="{{ site.legal.privacyLastUpdated }}">{{ site.legal.privacyLastUpdated }}</time></p>
+      <p class="doc-hero__meta">Last updated <time datetime="{{ site.legal.privacyLastUpdated }}">{{ site.legal.privacyLastUpdatedLabel }}</time></p>
     </div>
   </header>
 
@@ -39,7 +39,7 @@
         <p>This website is designed to collect as little information as possible. It does not use cookies, analytics, advertising or tracking scripts, and it does not load fonts, images or scripts from third-party services. Personal information is only involved when you choose to contact us, and the technical information any website host needs in order to deliver pages to your browser.</p>
 
         <h2 id="who">Who we are</h2>
-        <p>This website is operated by {{ site.legal.entity }} (“Texponex”, “we”, “us”). {{#if site.contact.emailEnabled}}You can reach us about privacy matters at <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.{{else}}A contact email address for privacy questions will be published on this page.{{/if}}</p>
+        <p>This website is operated by {{#if site.legal.entityName}}{{ site.legal.entityName }} (“{{ site.name }}”, “we”, “us”){{else}}{{ site.name }} (“we”, “us”){{/if}}. {{#if site.contact.emailEnabled}}You can reach us about privacy matters at <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.{{else}}A contact email address for privacy questions will be published on this page.{{/if}}</p>
 
         <h2 id="visiting">Visiting this website</h2>
         <p>This website is hosted by {{ site.hosting.providerName }}. To deliver pages to your browser and protect the site against abuse, the hosting provider processes technical information that every web request contains, such as your IP address, browser type, the page requested and the time of the request. We do not use this information to identify you. For details of how the hosting provider handles this information, see the <a href="{{ site.hosting.privacyUrl }}" rel="noopener noreferrer">{{ site.hosting.providerName }} privacy policy</a>.</p>
@@ -55,13 +55,13 @@
         {{/if}}
         {{/if}}
         <p>If you email us, we receive your email address and whatever you include in your message.</p>
-        <p>We use the information you send only to read and respond to your enquiry and, if we go on to work together, to manage that relationship. We do not sell it, and we do not add you to marketing lists without your permission.</p>
+        <p>We use the information you send only to read and respond to your inquiry and, if we go on to work together, to manage that relationship. We do not sell it, and we do not add you to marketing lists without your permission.</p>
 
         <h2 id="cookies">Cookies and tracking</h2>
         <p>This website does not set cookies and does not use analytics, advertising or social-media tracking. If that ever changes, this notice will be updated first.</p>
 
         <h2 id="retention">How long we keep information</h2>
-        <p>We keep enquiry correspondence only for as long as it is needed to respond to you and to manage any resulting business relationship, unless we are required by law to keep it longer.</p>
+        <p>We keep inquiry correspondence only for as long as it is needed to respond to you and to manage any resulting business relationship, unless we are required by law to keep it longer.</p>
 
         <h2 id="rights">Your choices and rights</h2>
         <p>Depending on where you live, you may have the right to ask for access to, correction of or deletion of personal information we hold about you, or to object to how it is used. {{#if site.contact.emailEnabled}}To make a request, email <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.{{else}}Once our contact email address is published on this page, you can use it to make a request.{{/if}} You may also have the right to complain to your local data-protection authority.</p>

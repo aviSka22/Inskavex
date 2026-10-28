@@ -18,7 +18,7 @@ Nothing here has been deployed; there is no live URL.
 | Clean install (`npm ci`) | ✅ 0 vulnerabilities | Automated |
 | Production build (`npm run build`) | ✅ 3 pages, ~15 ms | Automated |
 | Static checks (`npm run check`) | ✅ 10 / 10 passed | Automated |
-| Browser tests (`npm run test:e2e`) | ✅ 53 / 53 passed | Browser-tested (Chromium) |
+| Browser tests (`npm run test:e2e`) | ✅ 54 / 54 passed | Browser-tested (Chromium) |
 | Accessibility — axe-core WCAG 2.2 A/AA + best practice | ✅ 0 violations (3 pages × 2 widths, open menu, form error & status states) | Browser-tested |
 | Lighthouse | ✅ see table below | Browser-tested (Chromium, local server) |
 | `npm run dev` (serves, rebuilds on change) | ✅ | Automated (curl) |
@@ -33,7 +33,7 @@ Nothing here has been deployed; there is no live URL.
 ```bash
 npm ci
 npm run check          # build + static checks
-npm run test:e2e       # 53 Playwright tests
+npm run test:e2e       # 54 Playwright tests
 npm test               # both of the above
 ```
 
@@ -76,6 +76,35 @@ re-run with PageSpeed Insights after deploying.
 No raster images on the pages (all artwork is inline SVG) · **0 third-party requests**.
 
 ---
+
+## Pre-launch audit (2026-10-28)
+
+| Check | Result | Label |
+| --- | --- | --- |
+| Clean clone of `main` from GitHub → `npm ci` → `npm run build` (as Cloudflare Pages runs it, Node 22 from `.nvmrc`) | ✅ 0 vulnerabilities, 3 pages built | Automated |
+| `_headers` within Cloudflare limits | ✅ 2 rules, longest line 296 chars (limits: 100 rules, 2,000 chars) | Automated |
+| HTTP behavior of the build: 200 pages, real 404, `.html` → clean-URL 308, 1-year immutable caching on fingerprinted assets, valid manifest/robots/sitemap/JSON-LD | ✅ | Automated |
+| Visitor journey on 5 device profiles (iPhone 13 and Pixel 7 emulation with touch, iPad, 1366 laptop, 1920 desktop): load, scroll all sections, menu/nav, FAQ, form, privacy, 404 | ✅ No console errors, failed requests, CSP violations or overflow (only the intentional 404 document) | Browser-tested (Chromium emulation) |
+| Proofread of all rendered text (spell-check + typography + manual read) | ✅ after fixes below | Automated + manual |
+| Hero call to action above the fold on laptop/desktop viewports 1024 × 560 → 1920 × 1080 | ✅ after fix below (new regression test) | Browser-tested |
+| Lighthouse (home, mobile ×3) | Performance 98–99 · Accessibility 100 · Best Practices 100 · SEO 100 · CLS 0 | Browser-tested |
+| Lighthouse (home desktop; privacy mobile + desktop) | 100 in every category | Browser-tested |
+
+Defects found and fixed in this audit:
+
+| Defect | Fix |
+| --- | --- |
+| On 1366 × 768 laptops (≈657 px visible) and 1920 px screens the headline broke into 4 lines and “Start a conversation” fell below the first screen | Copy column widened (8/12), headline width cap 14ch, display size also bounded by viewport height, compact spacing tiers for short screens; regression test added |
+| Service tags displayed “APIs” in capitals as **“APIS”** | Reworded to “API design” / “Integrations” |
+| Mixed spelling: “enquiry” (British) on an American-English site | Standardized to “inquiry” (form, email subject, privacy notice) |
+| Privacy date shown as “2026-10-28” | Shown as “October 28, 2026” (ISO date kept in `<time datetime>`); malformed dates now fail the build |
+| Privacy notice read “operated by Texponex (“Texponex”, “we”, “us”)” | Reads “operated by Texponex (“we”, “us”)” unless a separate legal entity is configured |
+| Build log said the form “cannot deliver messages” although the email hand-off works | Message now explains the email-app fallback |
+
+Hosting risks documented (cannot be tested before deployment): Cloudflare Email Address
+Obfuscation, Rocket Loader and automatic Web Analytics rewrite pages and would conflict
+with the security policy or the privacy notice — `DEPLOYMENT.md` lists them as settings to
+keep off, and the live checklist verifies the result.
 
 ## Requirement checklist
 

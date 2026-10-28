@@ -132,6 +132,25 @@ test.describe('Responsive layout', () => {
     });
   }
 
+  test('hero call to action is visible on the first screen of common laptops and desktops', async ({ page }) => {
+    // Real viewports: screen height minus browser toolbars (e.g. 1366 × 768 → ~657).
+    for (const [width, height] of [[1024, 600], [1280, 600], [1366, 657], [1440, 790], [1920, 950]]) {
+      await page.setViewportSize({ width, height });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto('/');
+      const { ctaBottom, lines } = await page.evaluate(() => {
+        const title = document.querySelector('.hero__title');
+        const lineHeight = parseFloat(getComputedStyle(title).fontSize) * 0.98;
+        return {
+          ctaBottom: document.querySelector('.hero__actions').getBoundingClientRect().bottom,
+          lines: Math.round(title.getBoundingClientRect().height / lineHeight),
+        };
+      });
+      expect(ctaBottom, `${width}×${height}`).toBeLessThanOrEqual(height);
+      expect(lines, `${width}×${height} headline lines`).toBeLessThanOrEqual(3);
+    }
+  });
+
   test('body text stays readable on the smallest phones', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 700 });
     await page.goto('/');

@@ -74,6 +74,17 @@ Open it once to confirm the site loads; the real domain comes next.
 3. Optional: also redirect `texponex.pages.dev` to `https://texponex.com`, so only one
    public address exists (Pages project → **Settings** or a Bulk Redirect).
 
+### Zone settings to keep **off** (they rewrite pages and can break the site)
+
+The site ships a strict Content Security Policy and exact HTML. These Cloudflare features
+modify pages on the fly; check them for *texponex.com* before going live:
+
+| Setting | Where | Keep | Why |
+| --- | --- | --- | --- |
+| **Email Address Obfuscation** | **Security → Settings** (older dashboards: *Scrape Shield*) | **Off** | Rewrites email addresses and `mailto:` links into `/cdn-cgi/l/email-protection` links and injects a script; the published addresses and the form’s email hand-off should stay exactly as built |
+| **Rocket Loader** | **Speed → Optimization → Content Optimization** | **Off** | Rewrites how scripts load; conflicts with the Content Security Policy |
+| **Web Analytics** (automatic setup) | **Workers & Pages → texponex → Metrics** | **Not enabled** | Injects a third-party script the security policy blocks, and the privacy notice says the site uses no analytics. If you want analytics later, ask for the CSP and privacy notice to be updated first |
+
 ## Step 5 — Make sure `hello@texponex.com` receives mail
 
 The website publishes `hello@texponex.com`, and the contact form opens the visitor’s
@@ -116,6 +127,9 @@ form deliver messages directly from the website:
 - [ ] `https://texponex.com/robots.txt` shows `Allow: /` and the sitemap URL
 - [ ] `https://texponex.com/sitemap.xml` lists `https://texponex.com/` and `/privacy`
 - [ ] Response headers include `Content-Security-Policy` (browser dev tools → Network)
+- [ ] View source: email links read `href="mailto:hello@texponex.com"` (not `/cdn-cgi/l/email-protection…`)
+- [ ] Browser dev tools → Console shows no errors on the home page, `/privacy` and a 404
+- [ ] On a 1366 × 768 laptop the “Start a conversation” button is visible without scrolling
 - [ ] Contact form: submit a test; email to `hello@texponex.com` arrives
 - [ ] Mobile menu and every link on a real phone (iOS Safari and Android Chrome)
 - [ ] Paste the URL into a messaging app: the Texponex preview card appears

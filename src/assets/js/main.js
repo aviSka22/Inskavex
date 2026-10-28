@@ -336,7 +336,7 @@
   }
 
   function mailtoLink(data) {
-    const subject = `${data.topic} — enquiry from ${data.name}`;
+    const subject = `${data.topic} — inquiry from ${data.name}`;
     const details = [`Name: ${data.name}`, `Email: ${data.email}`];
     if (data.organization) details.push(`Organization: ${data.organization}`);
     details.push(`Topic: ${data.topic}`);
@@ -406,7 +406,7 @@
       window.location.href = href;
     } else {
       showStatus('info', 'Your message has not been sent.', [
-        'This form is not connected to a delivery service yet, so nothing has been sent or stored. Online enquiries will open when the website launches — please check back soon.',
+        'This form is not connected to a delivery service yet, so nothing has been sent or stored. Online inquiries will open when the website launches — please check back soon.',
       ]);
     }
   });
