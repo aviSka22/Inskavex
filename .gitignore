@@ -26,3 +26,6 @@ tmp/
 # Personal business-card details (kept out of the public repository)
 brand/business-card.local.json
 brand/print/private/
+
+# Local Cloudflare (wrangler dev) state
+.wrangler/
