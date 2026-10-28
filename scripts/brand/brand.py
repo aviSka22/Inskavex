@@ -389,8 +389,8 @@ def main():
             "title": "Your Title",
             "phone": "",
             "email": "hello@texponex.com",
-            "website": "texponex.com",
-            "qr": "https://texponex.com",
+            "website": "www.texponex.com",
+            "qr": "https://www.texponex.com",
         }, indent=2) + "\n")
     cards = [(json.loads(details_file.read_text()), print_dir)]
     local_file = KIT / "business-card.local.json"
