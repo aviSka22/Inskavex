@@ -37,6 +37,7 @@ A stage is marked completed only when its acceptance criteria were checked (see
 | | 19.2 Print-ready kit | ✅ | `brand/`: SVG, CMYK vector PDF and PNG in 4 colorways; avatars; overview sheet; guide (`brand/README.md`) |
 | | 19.3 Business card | ✅ | `brand/print/texponex-business-card.pdf` — 3.5 × 2 in, 3 mm bleed, CMYK, outlined text; details in `brand/business-card.json` (placeholders until you add your name/title) |
 | | 19.4 Website | ✅ | Header/footer logo, hero construction drawing (T + exponent), 404, favicon, app icons, OG image regenerated |
+| 21 Credibility pass (2026-10-28) | 21.1 Hero, labels, technology | ✅ | Abstract “Fig. 01” tile drawing replaced by a product illustration (web app + mobile app + integration log); section numbers and unordered principle numbers removed; abstract values block replaced by “Technology we work with” (list to be confirmed by the company). 54 tests pass; Lighthouse mobile 99 |
 | | 17.4 Competitor comparison | ⛔ | Reference sites could not be opened: `share.google`, `ranstacksolutions.com` and Arivora domains are blocked by this environment's network policy |
 
 ## External items (cannot be completed from this environment)

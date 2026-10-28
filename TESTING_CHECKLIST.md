@@ -155,6 +155,7 @@ Defects found and fixed during review:
 | (2026-10-24) Statement band left the right half empty on desktop; contact column duplicated FAQ content | Label moved to a left grid column; “helpful first message” list removed |
 | (2026-10-28) The symbol (an L-block) read as a letter in front of the new name — “L Texponex” — on a card-size mock-up | Logo redesigned: wordmark with exponent + T-symbol, chosen from side-by-side variants at 16 px to card size |
 | (2026-10-28) The regenerated “Texponex” wordmark clipped the “p” descender (the previous name had no descenders, so the artwork ended at the baseline) | Logo generator now measures the deepest descender and extends the artwork (32 → 37.5 units); logo CSS heights scaled so the mark keeps its size |
+| (2026-10-28) Owner review: the hero’s abstract tile drawing and “Fig. 01 — The next piece…” caption carried no meaning for visitors; numbered labels everywhere and one-word values read as templated | Hero replaced with a product illustration of what the company builds; caption removed; section and principle numbers removed; values replaced by the technology list |
 
 ### Known limitations / not done
 
