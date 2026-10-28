@@ -942,7 +942,10 @@ main:focus { outline: none; }
 @media (min-width: 64em) {
   .standards { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap); align-items: baseline; }
   .standards__title { grid-column: span 3; }
-  .standards__list { grid-column: 4 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .standards__list { grid-column: 4 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 90em) {
+  .standards__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* Focus areas -------------------------------------------------------------- */
