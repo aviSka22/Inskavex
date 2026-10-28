@@ -13,9 +13,11 @@ Brand kit (brand/):
     logo/pdf/*.pdf                    the same as CMYK vector PDFs (print)
     print/texponex-business-card.pdf  print-ready card, 3.5 × 2 in + 3 mm bleed,
                                       all text outlined; text from brand/business-card.json
+    print/private/…                   your personal card, from brand/business-card.local.json
+                                      (git-ignored, so personal details stay out of the repository)
 PNG exports are rendered afterwards by scripts/brand/render-images.mjs.
 
-Requires: pip install fonttools brotli uharfbuzz      Run: npm run brand
+Requires: pip install fonttools brotli uharfbuzz segno      Run: npm run brand
 """
 
 import io
@@ -27,6 +29,7 @@ import zlib
 from functools import lru_cache
 from pathlib import Path
 
+import segno
 import uharfbuzz as hb
 from fontTools.pens.basePen import BasePen
 from fontTools.pens.boundsPen import BoundsPen
@@ -295,6 +298,13 @@ def business_card(path, details, logo, mark):
         ops, *_ = shape(line, size=7.5, wght=480, wdth=100, x=left, baseline=bottom - index * 11)
         back += pdf_fill(ops, CMYK_BLACK)
 
+    # QR code to the website, bottom-right, sitting on the last text baseline.
+    # K100 only for a crisp single-plate print; the 4-module quiet zone falls
+    # inside the card's blank margin.
+    if details.get("qr"):
+        size = QR_SIZE_MM * MM
+        back += pdf_fill(qr_ops(details["qr"], size), CMYK_BLACK, dx=right - size, dy=bottom - size)
+
     m_scale = 9 * MM / mark["width"]
     mx = right - mark["width"] * m_scale
     back += pdf_fill(mark["ink"], CMYK_BLACK, scale=m_scale, dx=mx, dy=top - 1)
@@ -304,6 +314,29 @@ def business_card(path, details, logo, mark):
         {"size": (W, H), "content": front, "trim": trim},
         {"size": (W, H), "content": back, "trim": trim},
     ], f"{NAME} business card")
+
+
+QR_SIZE_MM = 14  # symbol only; plus a 4-module quiet zone of blank paper
+
+
+def qr_ops(data, size):
+    """QR code as vector paths (one rectangle per horizontal run of dark modules),
+    `size` wide without the quiet zone. Error correction M survives small marks."""
+    matrix = [list(row) for row in segno.make(data, error="m", micro=False, boost_error=False).matrix]
+    module = size / len(matrix)
+    ops = []
+    for y, row in enumerate(matrix):
+        x = 0
+        while x < len(row):
+            if row[x]:
+                start = x
+                while x < len(row) and row[x]:
+                    x += 1
+                # Rows overlap by a hair so no white line can appear between them.
+                ops += rect(start * module, y * module, (x - start) * module, module + 0.02)
+            else:
+                x += 1
+    return ops
 
 
 # ---------------------------------------------------------------------------
@@ -395,6 +428,9 @@ def main():
             (svg_dir / f"{stem}.svg").write_text(svg_file(art, ink, accent, margin=clear))
             logo_pdf(pdf_dir / f"{stem}-cmyk.pdf", art, ink_cmyk, accent_cmyk, width_mm, f"{NAME} {kind} ({name}, CMYK)")
 
+    # Business cards: the committed card uses the public details in
+    # business-card.json; personal details go in business-card.local.json,
+    # which git ignores, and produce a card in print/private/.
     details_file = KIT / "business-card.json"
     if not details_file.exists():
         details_file.write_text(json.dumps({
@@ -403,17 +439,24 @@ def main():
             "phone": "",
             "email": "hello@texponex.com",
             "website": "texponex.com",
+            "qr": "https://texponex.com",
         }, indent=2) + "\n")
-    details = json.loads(details_file.read_text())
-    card = print_dir / "texponex-business-card.pdf"
-    business_card(card, details, logo, mark)
+    cards = [(json.loads(details_file.read_text()), print_dir)]
+    local_file = KIT / "business-card.local.json"
+    if local_file.exists():
+        private = print_dir / "private"
+        private.mkdir(exist_ok=True)
+        cards.append(({**cards[0][0], **json.loads(local_file.read_text())}, private))
 
-    # Card previews (optional: needs poppler's pdftoppm)
-    if shutil.which("pdftoppm"):
-        for page, side in ((1, "front"), (2, "back")):
-            stem = print_dir / f"texponex-business-card-{side}-preview"
-            subprocess.run(["pdftoppm", "-png", "-r", "300", "-f", str(page), "-l", str(page), "-singlefile",
-                            str(card), str(stem)], check=True)
+    for details, directory in cards:
+        card = directory / "texponex-business-card.pdf"
+        business_card(card, details, logo, mark)
+        if shutil.which("pdftoppm"):  # previews (poppler)
+            for page, side in ((1, "front"), (2, "back")):
+                stem = directory / f"texponex-business-card-{side}-preview"
+                subprocess.run(["pdftoppm", "-png", "-r", "300", "-f", str(page), "-l", str(page), "-singlefile",
+                                str(card), str(stem)], check=True)
+        print(f"Business card written: {card.relative_to(ROOT)}")
 
     print(f"Primary logo {logo['width']} × {logo['height']} units; symbol {SYMBOL_W} × {SYMBOL_H}.")
     print("Website assets and brand kit written (brand/). Next: node scripts/brand/render-images.mjs")

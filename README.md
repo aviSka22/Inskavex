@@ -211,10 +211,10 @@ The logo files for print, documents and social media — including CMYK vector P
 and a print-ready business card — are in **[`brand/`](brand/README.md)**, with a
 guide to which file to use where.
 
-To regenerate the logo everywhere (website and kit), e.g. after editing the card
-details in `brand/business-card.json`:
+To regenerate the logo everywhere (website and kit), e.g. after editing your card
+details in `brand/business-card.local.json` (private — see `brand/README.md`):
 
 ```bash
-pip install fonttools brotli uharfbuzz   # once
+pip install fonttools brotli uharfbuzz segno   # once
 npm run brand                            # needs Playwright Chromium for the PNGs
 ```

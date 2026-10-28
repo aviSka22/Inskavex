@@ -85,14 +85,24 @@ Print-ready file: [`print/texponex-business-card.pdf`](print/texponex-business-c
 | Safe area | Text and logo at least 5 mm inside the trim edge |
 | Color | CMYK; front background rich black C60 M40 Y40 K100; ember C0 M65 Y81 K0 |
 | Text | Converted to outlines — no fonts needed by the printer |
+| QR code | Back, bottom-right, 14 mm, black (K100) only, links to `https://texponex.com`; quiet zone kept clear; verified to decode from the print file |
 | Boxes | PDF TrimBox and BleedBox are set; no crop marks (most printers prefer this) |
 
-**Put your details on the card**
+**Put your details on the card — privately**
 
-1. Edit [`business-card.json`](business-card.json) — name, title, optional phone,
-   email and website. It currently holds the placeholders **“Your Name” / “Your Title”**.
-2. Run `npm run brand` (needs `pip install fonttools brotli uharfbuzz` once).
-3. The PDF and previews in `print/` are regenerated.
+This repository is public, so personal details are kept out of it:
+
+1. Create `brand/business-card.local.json` (git ignores it) with your details, e.g.
+
+   ```json
+   { "name": "Your Name", "title": "Your Title", "phone": "+91 00000 00000" }
+   ```
+
+   Any field you leave out (email, website, QR link) comes from
+   [`business-card.json`](business-card.json), which holds the public company details.
+2. Run `npm run brand` (needs `pip install fonttools brotli uharfbuzz segno` once).
+3. Your card is written to `brand/print/private/` (also git-ignored); the card in
+   `brand/print/` keeps the placeholders **“Your Name” / “Your Title”**.
 
 **Recommended production** (ask your printer): 350–400 gsm uncoated or matte card in a
 warm white; optional soft-touch matte lamination on the front only. Ask for a printed
@@ -102,7 +112,7 @@ outlined text.
 ## Regenerating the kit
 
 ```bash
-pip install fonttools brotli uharfbuzz   # once
+pip install fonttools brotli uharfbuzz segno   # once
 npm run brand
 ```
 
