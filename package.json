@@ -1,8 +1,8 @@
 {
-  "name": "inskavex-website",
+  "name": "texponex-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Official website of Inskavex — static site for Cloudflare Pages.",
+  "description": "Official website of Texponex — static site for Cloudflare Pages.",
   "type": "module",
   "engines": {
     "node": ">=20"

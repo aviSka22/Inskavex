@@ -1,6 +1,6 @@
-# Inskavex — Website
+# Texponex — Website
 
-Official website of **Inskavex**, a software and technology company. *Building What’s Next.*
+Official website of **Texponex**, a software and technology company. *Building What’s Next.*
 
 A fast, accessible, static corporate site: semantic HTML, modern CSS and a little
 vanilla JavaScript, assembled by a small **zero-dependency** Node build script and
@@ -8,10 +8,10 @@ ready for **Cloudflare Pages**.
 
 | | |
 | --- | --- |
-| Pages | Home (hero, about, services, approach, what we build, statement, why Inskavex, FAQ, contact), privacy notice, 404 |
+| Pages | Home (hero, about, services, approach, what we build, statement, why Texponex, FAQ, contact), privacy notice, 404 |
 | Runtime dependencies | None — no framework, no third-party scripts, fonts or images |
 | Build output | `dist/` |
-| Planned domain | `https://inskavex.com` (not yet purchased) |
+| Domain | `https://texponex.com` (Cloudflare Registrar) · email `hello@texponex.com` |
 
 Project documents: [Plan](PROJECT_PLAN.md) · [Status](IMPLEMENTATION_STATUS.md) ·
 [Design system](DESIGN_SYSTEM.md) · [Testing](TESTING_CHECKLIST.md) · [Deployment](DEPLOYMENT.md)
@@ -66,7 +66,7 @@ Content Security Policy) — so what works in preview works in production.
 
 ```bash
 npx playwright install chromium   # once per machine
-npm test                          # build + static checks + 52 browser tests
+npm test                          # build + static checks + 53 browser tests
 ```
 
 | Command | What it does |
@@ -86,12 +86,12 @@ then rebuild. Nothing in it is secret — it is all published with the site.
 
 ```js
 contact: {
-  email: 'hello@inskavex.com',   // ← the real address, once it exists
+  email: 'hello@texponex.com',   // official business email
 ```
 
-While `email` is empty the site honestly says the address is “coming soon”.
-Once set, it appears in the contact section, footer and privacy notice, and the form
-offers a pre-filled email fallback.
+It appears in the contact section, footer, privacy notice and structured data, and
+the contact form opens the visitor’s email app addressed to it. If emptied, the site
+honestly says the address is “coming soon”.
 
 ### Connect the contact form
 
@@ -105,7 +105,7 @@ itself. To deliver messages, connect a static-form provider (for example
 
    ```js
    contact: {
-     email: 'hello@inskavex.com',
+     email: 'hello@texponex.com',
      formEndpoint: 'https://formspree.io/f/abcdwxyz',
      formProviderName: 'Formspree',
      formProviderPrivacyUrl: 'https://formspree.io/legal/privacy-policy',
@@ -123,14 +123,14 @@ and updates the privacy notice. The form includes the honeypot field `_gotcha` a
 
 | Configuration | On a valid submission |
 | --- | --- |
-| No endpoint, no email (current) | Says clearly the message **has not been sent**; nothing is transmitted |
-| Email only | Says the message has not been sent and offers “Open in your email app” with a pre-filled email (this only opens the visitor’s email app — delivery is not guaranteed) |
+| No endpoint, no email | Says clearly the message **has not been sent**; nothing is transmitted |
+| Email only (**current**: `hello@texponex.com`) | Opens the visitor’s email app with the message filled in, says nothing has been sent yet, and offers an “Open in your email app” fallback (delivery depends on the visitor sending it) |
 | Endpoint | Sends to the provider; shows “Message sent” **only** after a successful response, otherwise an error that keeps the visitor’s text |
 
 ### Update the domain
 
 ```js
-url: 'https://inskavex.com',
+url: 'https://texponex.com',
 ```
 
 Canonical links, Open Graph URLs, the sitemap, robots.txt and structured data all use
@@ -168,7 +168,7 @@ rather than shipping blank text.
 ## 9. Deploy
 
 Cloudflare Pages settings: **build command** `npm run build`, **output directory** `dist`.
-Full step-by-step instructions, including connecting `inskavex.com` later, are in
+Full step-by-step instructions, including connecting `texponex.com` later, are in
 **[DEPLOYMENT.md](DEPLOYMENT.md)**.
 
 ## 10. Project structure

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Inskavex — styles
+   Texponex — styles
    Design tokens and rationale are documented in DESIGN_SYSTEM.md.
    Order: fonts → tokens → base → layout → components → sections → motion.
    ========================================================================== */
@@ -421,9 +421,9 @@ main:focus { outline: none; }
   color: var(--paper-50);
 }
 
-.logo { width: auto; height: 1.75rem; }
+.logo { width: auto; height: 2.05rem; } /* artwork is 37.5 units tall: mark = 32 units + descender */
 .logo__next { fill: var(--ember-500); }
-@media (min-width: 64em) { .site-header .logo { height: 2rem; } }
+@media (min-width: 64em) { .site-header .logo { height: 2.35rem; } }
 
 .nav-toggle {
   display: inline-flex;
@@ -1073,7 +1073,7 @@ main:focus { outline: none; }
 .statement--scrub .sw.is-lit { color: var(--paper-50); }
 .statement--scrub .statement__accent .sw.is-lit { color: var(--ember-500); }
 
-/* Why Inskavex ------------------------------------------------------------- */
+/* Why Texponex ------------------------------------------------------------- */
 
 .why { display: grid; gap: var(--space-7); }
 .why__cta { margin-top: var(--space-6); }
@@ -1239,6 +1239,7 @@ main:focus { outline: none; }
   line-height: 1.55;
 }
 .form-notice .icon { margin-top: 0.15em; color: var(--ember-500); }
+.form-notice__email { font-weight: 600; overflow-wrap: anywhere; }
 
 .form-note { margin-bottom: var(--space-5); font-size: var(--text-sm); color: var(--stone-300); }
 
@@ -1361,7 +1362,7 @@ main:focus { outline: none; }
 }
 .site-footer__top { display: grid; gap: var(--space-7); padding-bottom: var(--space-8); }
 .site-footer__logo { display: inline-flex; color: var(--paper-50); }
-.site-footer__logo .logo { height: 2.25rem; }
+.site-footer__logo .logo { height: 2.65rem; }
 .site-footer__brand p { margin-top: var(--space-5); max-width: 38ch; color: var(--stone-300); font-size: var(--text-base); }
 
 .site-footer__nav {

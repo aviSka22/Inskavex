@@ -10,8 +10,10 @@ export function loadConfig(env = process.env) {
 
   if (env.SITE_URL) config.url = env.SITE_URL;
   if (env.ALLOW_INDEXING) config.allowIndexing = env.ALLOW_INDEXING.trim().toLowerCase() === 'true';
-  if (env.CONTACT_EMAIL) config.contact.email = env.CONTACT_EMAIL;
-  if (env.FORM_ENDPOINT) config.contact.formEndpoint = env.FORM_ENDPOINT;
+  // An explicitly empty value clears the setting (used by the test suite to
+  // build an unconfigured variant).
+  if (env.CONTACT_EMAIL !== undefined) config.contact.email = env.CONTACT_EMAIL;
+  if (env.FORM_ENDPOINT !== undefined) config.contact.formEndpoint = env.FORM_ENDPOINT;
 
   config.url = String(config.url).trim().replace(/\/+$/, '');
   config.contact.email = String(config.contact.email || '').trim();

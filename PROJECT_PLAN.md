@@ -1,7 +1,10 @@
-# Inskavex — Project Plan
+# Texponex — Project Plan
 
-Official corporate website for **Inskavex**, a software and technology company.
-Planned production domain: `https://inskavex.com` (not yet purchased).
+Official corporate website for **Texponex**, a software and technology company.
+Production domain: `https://texponex.com` (registered with Cloudflare Registrar) · email `hello@texponex.com`.
+
+> **Brand update (2026-10-28):** the company name is **Texponex**. The project began
+> under an earlier working name; the site, assets and documents were renamed throughout.
 
 This plan was written after inspecting the repository (Phase 0) and is executed
 in order. Live progress is tracked in [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md).
@@ -26,8 +29,8 @@ Because the repository was empty, the project is initialized from scratch.
 
 ### Goals
 
-1. Present Inskavex as a credible, modern, serious software and technology company.
-2. Make it clear within seconds what Inskavex is, what it does, and how to get in touch.
+1. Present Texponex as a credible, modern, serious software and technology company.
+2. Make it clear within seconds what Texponex is, what it does, and how to get in touch.
 3. Deliver a premium, distinctive, cohesive design that does not look like a generic template.
 4. Excellent behavior on every screen size from 320 px phones to 1920 px displays.
 5. Accessibility target: WCAG 2.2 AA.
@@ -50,7 +53,7 @@ Because the repository was empty, the project is initialized from scratch.
 
 | Audience | What they need from the site |
 | --- | --- |
-| Business owners and managers | Understand what Inskavex can build for them; an easy way to start a conversation |
+| Business owners and managers | Understand what Texponex can build for them; an easy way to start a conversation |
 | Founders / product owners | Confidence in engineering approach, process and communication |
 | Organizations with existing systems | Evidence that integration, automation and improvement work is understood |
 | Professional contacts and partners | A credible, professional first impression and contact route |
@@ -102,7 +105,7 @@ Full detail in [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md).
 ```
 /                 Home (single-page corporate site)
   #top            Hero — headline, lead, CTAs, capability strip, brand artwork
-  #about          01 About Inskavex
+  #about          01 About Texponex
   #services       02 What we do (6 services, editorial index)
   #approach       03 How we work (6-step process)
   #focus          04 What we build (6 focus areas)
@@ -250,9 +253,9 @@ as Automated / Browser-tested / Physical-device tested / Not tested / Blocked.
 
 | Risk / dependency | Mitigation |
 | --- | --- |
-| Business email not yet available | Central config value; site renders an honest “coming soon” state |
+| Business email (now `hello@texponex.com`) must actually receive mail | Email Routing / mailbox set-up and test in `DEPLOYMENT.md` Step 5 |
 | Form provider not configured | Honest UI states; one config value to enable |
-| Domain not purchased | Canonical URL centralized + env override; indexing switch for previews |
+| Domain purchased (`texponex.com`); hosting not yet connected | `DEPLOYMENT.md` Steps 2–4; canonical URL already set |
 | Legal entity / privacy details unconfirmed | Privacy notice written to actual functionality; review items listed in `DEPLOYMENT.md` |
 | No physical devices in the cloud | Browser-emulated viewports; local checklist for real devices |
 

@@ -53,7 +53,7 @@ check(
   [
     'index.html', 'privacy.html', '404.html', 'sitemap.xml', 'robots.txt', '_headers',
     'favicon.svg', 'favicon.ico', 'apple-touch-icon.png', 'og-image.png', 'site.webmanifest',
-    'icon-192.png', 'icon-512.png', 'brand/inskavex-mark.png',
+    'icon-192.png', 'icon-512.png', 'brand/texponex-mark.png',
   ].filter((file) => !fs.existsSync(path.join(DIST, file))).map((file) => `missing ${file}`),
 );
 
@@ -197,14 +197,20 @@ check(
     files = walk(path.join(ROOT, 'src'));
   }
   files = files.concat(walk(DIST)).filter((file) => /\.(html|css|js|mjs|md|json|txt|xml|svg|webmanifest)$/.test(file) && fs.existsSync(file));
+  // Flags misspellings of the brand (e.g. "Texponix", "Taxponex") and any leftover
+  // of the project's earlier working name.
+  const BRAND_LIKE = /\b(?:t[ae]k?x+p+h?o+n+[aeiy]+[xks]+\w*|in[sc]+k?[ae]v\w*)/gi;
+  // The GitHub repository still carries the earlier working name. Remove this
+  // exception after renaming the repository in GitHub.
+  const REPOSITORY_SLUG = /aviSka22\/Inskavex(\.git)?|^cd Inskavex$/gm;
   for (const file of files) {
     if (file.includes('node_modules') || file.endsWith('package-lock.json') || file.endsWith('check.mjs')) continue;
-    const text = fs.readFileSync(file, 'utf8');
-    for (const [word] of text.matchAll(/\b[Ii]n[sc]+k?[ae]v\w*/g)) {
-      if (!['Inskavex', 'inskavex', 'INSKAVEX'].includes(word)) problems.push(`${path.relative(ROOT, file)}: "${word}"`);
+    const text = fs.readFileSync(file, 'utf8').replace(REPOSITORY_SLUG, '');
+    for (const [word] of text.matchAll(BRAND_LIKE)) {
+      if (!['Texponex', 'texponex', 'TEXPONEX'].includes(word)) problems.push(`${path.relative(ROOT, file)}: "${word}"`);
     }
   }
-  check('Brand spelling is consistently “Inskavex”', problems);
+  check('Brand spelling is consistently “Texponex”', problems);
 }
 
 // 8. Secrets ------------------------------------------------------------------

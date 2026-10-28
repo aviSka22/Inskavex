@@ -3,7 +3,7 @@
 // Requires the dev dependency @playwright/test and a Chromium browser.
 //
 // Outputs into src/public/: og-image.png, apple-touch-icon.png, icon-192.png,
-// icon-512.png, favicon.ico and brand/inskavex-mark.png.
+// icon-512.png, favicon.ico and brand/texponex-mark.png.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,7 +20,7 @@ const MARK_NEXT = 'M19 0H32V13H19Z';
 
 const font = fs.readFileSync(path.join(ROOT, 'src/assets/fonts/archivo-var.woff2')).toString('base64');
 const mono = fs.readFileSync(path.join(ROOT, 'src/assets/fonts/jetbrains-mono-var.woff2')).toString('base64');
-const logoLight = fs.readFileSync(path.join(PUBLIC, 'brand/inskavex-logo-light.svg'), 'utf8');
+const logoLight = fs.readFileSync(path.join(PUBLIC, 'brand/texponex-logo-light.svg'), 'utf8');
 
 const baseCss = `
   @font-face { font-family: Archivo; src: url(data:font/woff2;base64,${font}) format("woff2"); font-weight: 300 800; font-stretch: 100% 125%; }
@@ -88,7 +88,7 @@ fs.writeFileSync(path.join(PUBLIC, 'og-image.png'), await shot(ogHtml, 1200, 630
 fs.writeFileSync(path.join(PUBLIC, 'apple-touch-icon.png'), await shot(iconHtml(180), 180, 180));
 fs.writeFileSync(path.join(PUBLIC, 'icon-192.png'), await shot(iconHtml(192), 192, 192));
 fs.writeFileSync(path.join(PUBLIC, 'icon-512.png'), await shot(iconHtml(512), 512, 512));
-fs.writeFileSync(path.join(PUBLIC, 'brand/inskavex-mark.png'), await shot(markHtml, 512, 512, { transparent: true }));
+fs.writeFileSync(path.join(PUBLIC, 'brand/texponex-mark.png'), await shot(markHtml, 512, 512, { transparent: true }));
 fs.writeFileSync(
   path.join(PUBLIC, 'favicon.ico'),
   ico([

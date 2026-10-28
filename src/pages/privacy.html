@@ -1,7 +1,7 @@
 <!--page
 {
-  "title": "Privacy notice — Inskavex",
-  "description": "How the Inskavex website handles information: what is collected when you visit or contact us, who processes it, and the choices you have.",
+  "title": "Privacy notice — Texponex",
+  "description": "How the Texponex website handles information: what is collected when you visit or contact us, who processes it, and the choices you have.",
   "path": "/privacy"
 }
 -->
@@ -39,7 +39,7 @@
         <p>This website is designed to collect as little information as possible. It does not use cookies, analytics, advertising or tracking scripts, and it does not load fonts, images or scripts from third-party services. Personal information is only involved when you choose to contact us, and the technical information any website host needs in order to deliver pages to your browser.</p>
 
         <h2 id="who">Who we are</h2>
-        <p>This website is operated by {{ site.legal.entity }} (“Inskavex”, “we”, “us”). {{#if site.contact.emailEnabled}}You can reach us about privacy matters at <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.{{else}}A contact email address for privacy questions will be published on this page.{{/if}}</p>
+        <p>This website is operated by {{ site.legal.entity }} (“Texponex”, “we”, “us”). {{#if site.contact.emailEnabled}}You can reach us about privacy matters at <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.{{else}}A contact email address for privacy questions will be published on this page.{{/if}}</p>
 
         <h2 id="visiting">Visiting this website</h2>
         <p>This website is hosted by {{ site.hosting.providerName }}. To deliver pages to your browser and protect the site against abuse, the hosting provider processes technical information that every web request contains, such as your IP address, browser type, the page requested and the time of the request. We do not use this information to identify you. For details of how the hosting provider handles this information, see the <a href="{{ site.hosting.privacyUrl }}" rel="noopener noreferrer">{{ site.hosting.providerName }} privacy policy</a>.</p>
@@ -48,7 +48,11 @@
         {{#if site.contact.formEnabled}}
         <p>If you use the contact form, the details you enter&nbsp;— your name, email address, optional organization, topic and message&nbsp;— are sent to {{ site.contact.formProviderLabel }}, a service that delivers form submissions to us by email. {{#if site.contact.formProviderPrivacyEnabled}}You can read the <a href="{{ site.contact.formProviderPrivacyUrl }}" rel="noopener noreferrer">form provider’s privacy policy</a>.{{/if}}</p>
         {{else}}
-        <p>The contact form on this website is not currently connected to a delivery service. Information you type into it stays in your browser and is not stored or transmitted.{{#if site.contact.emailEnabled}} If you choose the email option, your own email application prepares the message and nothing is sent until you send it yourself.{{/if}}</p>
+        {{#if site.contact.emailEnabled}}
+        <p>The contact form on this website does not send anything itself. When you press Send, it opens your own email application with your message filled in, addressed to {{ site.contact.email }}; nothing is sent until you send it from there. The website does not store or transmit what you type.</p>
+        {{else}}
+        <p>The contact form on this website is not currently connected to a delivery service. Information you type into it stays in your browser and is not stored or transmitted.</p>
+        {{/if}}
         {{/if}}
         <p>If you email us, we receive your email address and whatever you include in your message.</p>
         <p>We use the information you send only to read and respond to your enquiry and, if we go on to work together, to manage that relationship. We do not sell it, and we do not add you to marketing lists without your permission.</p>

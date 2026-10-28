@@ -1,4 +1,4 @@
-# Inskavex — Design System
+# Texponex — Design System
 
 The visual identity and the tokens behind it. All tokens live as CSS custom
 properties at the top of [`src/assets/css/styles.css`](src/assets/css/styles.css).
@@ -7,7 +7,7 @@ properties at the top of [`src/assets/css/styles.css`](src/assets/css/styles.css
 
 ## 1. Concept — “the next piece”
 
-The Inskavex mark is a solid block with its top-right quadrant lifted out and
+The Texponex mark is a solid block with its top-right quadrant lifted out and
 offset up and to the right, in the accent color. It reads as *what has been built*
 and *the next piece, about to be placed* — a direct expression of
 “Building What’s Next” and of careful, incremental engineering.
@@ -35,9 +35,9 @@ hairline rules, a 12-column grid and whitespace.
 
 | Asset | File |
 | --- | --- |
-| Lockup, for light backgrounds | `src/public/brand/inskavex-logo.svg` |
-| Lockup, for dark backgrounds | `src/public/brand/inskavex-logo-light.svg` |
-| Mark only (SVG / PNG 512) | `src/public/brand/inskavex-mark.svg`, `inskavex-mark.png` |
+| Lockup, for light backgrounds | `src/public/brand/texponex-logo.svg` |
+| Lockup, for dark backgrounds | `src/public/brand/texponex-logo-light.svg` |
+| Mark only (SVG / PNG 512) | `src/public/brand/texponex-mark.svg`, `texponex-mark.png` |
 | Inline (site header/footer) | `src/partials/logo.html` (uses `currentColor`) |
 | Favicon (adapts to dark tabs) | `src/public/favicon.svg`, `favicon.ico` |
 | App icons | `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` |

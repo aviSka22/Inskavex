@@ -1,5 +1,5 @@
 /*
- * Inskavex — progressive enhancement.
+ * Texponex — progressive enhancement.
  * The site is fully readable without this file; it adds the mobile menu,
  * section highlighting, gentle reveals and contact-form validation/delivery.
  */
@@ -390,18 +390,20 @@
     if (delivery === 'endpoint') {
       sendToEndpoint(data);
     } else if (delivery === 'email' && businessEmail) {
+      const href = mailtoLink(data);
       const link = document.createElement('a');
       link.className = 'button button--accent';
-      link.href = mailtoLink(data);
+      link.href = href;
       link.textContent = 'Open in your email app';
       const note = document.createElement('p');
       note.className = 'form-status__small';
-      note.textContent = 'This opens your own email application with the message filled in. It is only sent once you press send there.';
+      note.textContent = `If your email app did not open, use the button above or write to ${businessEmail} directly.`;
       const wrapper = document.createElement('div');
       wrapper.append(link, note);
-      showStatus('info', 'Your message has not been sent yet.', [
-        'Online delivery for this form is not set up, so it cannot send your message directly. You can send it from your email app instead — we have prepared it for you.',
+      showStatus('info', 'Your message is ready to send.', [
+        `Nothing has been sent yet: your email app is opening with your message filled in, addressed to ${businessEmail}. Press Send there to deliver it.`,
       ], wrapper);
+      window.location.href = href;
     } else {
       showStatus('info', 'Your message has not been sent.', [
         'This form is not connected to a delivery service yet, so nothing has been sent or stored. Online enquiries will open when the website launches — please check back soon.',

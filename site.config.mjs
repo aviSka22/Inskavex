@@ -1,5 +1,5 @@
 /**
- * Inskavex website configuration — the single place for business details.
+ * Texponex website configuration — the single place for business details.
  *
  * Edit the values below, then run `npm run build`. Every page, the sitemap,
  * robots.txt, structured data and the security headers are generated from here.
@@ -7,7 +7,7 @@
  * Several values can also be overridden with environment variables at build
  * time (useful in Cloudflare Pages → Settings → Environment variables):
  *
- *   SITE_URL         overrides `url`             e.g. https://inskavex.pages.dev
+ *   SITE_URL         overrides `url`             e.g. https://texponex.pages.dev
  *   ALLOW_INDEXING   overrides `allowIndexing`   "true" or "false"
  *   CONTACT_EMAIL    overrides `contact.email`
  *   FORM_ENDPOINT    overrides `contact.formEndpoint`
@@ -16,29 +16,29 @@
  * everything is published with the website.
  */
 export default {
-  name: 'Inskavex',
+  name: 'Texponex',
   tagline: 'Building What’s Next',
 
-  // Planned production domain. Confirm after the domain has been purchased and
-  // connected in Cloudflare Pages. No trailing slash.
-  url: 'https://inskavex.com',
+  // Production domain (registered with Cloudflare Registrar). No trailing slash.
+  url: 'https://texponex.com',
 
-  // Set to false for preview deployments (e.g. *.pages.dev before the domain is
-  // live). When false, robots.txt disallows crawling and pages carry `noindex`.
+  // Set to false (or ALLOW_INDEXING=false) to keep a deployment out of search
+  // engines. When false, robots.txt disallows crawling and pages carry `noindex`.
   allowIndexing: true,
 
   description:
-    'Inskavex designs and builds websites, web and mobile applications, and system integrations — practical, well-engineered software made to be maintained.',
+    'Texponex designs and builds websites, web and mobile applications, and system integrations — practical, well-engineered software made to be maintained.',
 
   contact: {
-    // PLACEHOLDER — the business email address has not been created yet.
-    // Leave empty until it exists, e.g. 'hello@inskavex.com'. While empty, the
-    // site shows an honest "coming soon" note instead of an email link.
-    email: '',
+    // Official business email. Shown in the contact section, footer and privacy
+    // notice, and used for the contact form's email fallback. If emptied, the
+    // site shows an honest "coming soon" note instead.
+    email: 'hello@texponex.com',
 
     // Contact-form delivery endpoint from a static-form provider, e.g.
     // 'https://formspree.io/f/abcdwxyz'. Must be https. While empty, the form
-    // validates input but clearly tells visitors their message was NOT sent.
+    // validates input and offers to open the visitor's email app, pre-filled,
+    // addressed to `email` — it never claims a message was sent.
     formEndpoint: '',
 
     // Shown in the privacy notice once the form is connected, e.g. 'Formspree'.
@@ -53,10 +53,10 @@ export default {
   },
 
   legal: {
-    // Registered legal entity name, once confirmed. While empty, "Inskavex" is used.
+    // Registered legal entity name, once confirmed. While empty, "Texponex" is used.
     entityName: '',
     // Date shown on the privacy notice. Update whenever the notice changes.
-    privacyLastUpdated: '2026-10-23',
+    privacyLastUpdated: '2026-10-28',
   },
 
   // Browser UI color (matches the dark header).

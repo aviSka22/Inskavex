@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: **2026-10-24**. Statuses: ✅ completed · 🔄 in progress · ⏳ pending · ⛔ blocked (external).
+Last updated: **2026-10-28**. Statuses: ✅ completed · 🔄 in progress · ⏳ pending · ⛔ blocked (external).
 A stage is marked completed only when its acceptance criteria were checked (see
 [`TESTING_CHECKLIST.md`](TESTING_CHECKLIST.md)).
 
@@ -16,7 +16,7 @@ A stage is marked completed only when its acceptance criteria were checked (see
 | 4 Design system | 4.1 Tokens & components | ✅ | CSS custom properties; documented component classes |
 | 5 Stack | 5.1 Decision | ✅ | HTML + CSS + vanilla JS + tiny Node build (`PROJECT_PLAN.md` §7) |
 | 6 Responsive | 6.1 Layouts at all ranges | ✅ | No overflow at 10 widths × 3 pages (automated); screenshots reviewed 320–1920 px |
-| 7 Interaction | 7.1 Nav, menu, reveals, form | ✅ | 52 browser tests pass; reduced motion and no-JS verified |
+| 7 Interaction | 7.1 Nav, menu, reveals, form | ✅ | 53 browser tests pass; reduced motion and no-JS verified |
 | 8 Accessibility | 8.1 WCAG 2.2 AA target | ✅ | axe: 0 violations; keyboard, focus, form semantics tested. Screen readers not tested |
 | 9 Performance | 9.1 Fonts, hashing, minification | ✅ | Lighthouse mobile 98–100 / desktop 100; CLS 0 |
 | 10 SEO | 10.1 Metadata, sitemap, robots, JSON-LD | ✅ | Static checks + Lighthouse SEO 100 |
@@ -29,17 +29,20 @@ A stage is marked completed only when its acceptance criteria were checked (see
 | 17 Refinement (2026-10-24) | 17.1 Motion system | ✅ | Hero assembly, word-rise titles, staggered reveals, drawing rules, icon placement, statement scrub, progress line — `DESIGN_SYSTEM.md` §6 |
 | | 17.2 Content gaps | ✅ | Applied AI capability (service 05, FAQ, form topic), engineering standards strip, statement band, “What happens next”, optional timeline field, footer wordmark |
 | | 17.3 Typography & alignment | ✅ | Em dashes kept with preceding word, optical alignment of display type, stacked service tags, ghost-button fill hover |
+| 18 Rebrand (2026-10-28) | 18.1 Rename to Texponex | ✅ | All copy, metadata, config, assets and docs; wordmark regenerated (artwork extended for the “p” descender); brand-spelling check enforces “Texponex” |
+| | 18.2 Domain & email | ✅ | `url: https://texponex.com`, `email: hello@texponex.com`; form in email mode; privacy notice updated |
+| | 18.3 Hosting on texponex.com | ⛔ | Needs your Cloudflare account — `DEPLOYMENT.md` |
 | | 17.4 Competitor comparison | ⛔ | Reference sites could not be opened: `share.google`, `ranstacksolutions.com` and Arivora domains are blocked by this environment's network policy |
 
 ## External items (cannot be completed from this environment)
 
 | Item | Status | Owner action |
 | --- | --- | --- |
-| Business email address | ⛔ Not created | Create mailbox, set `contact.email` |
-| Contact-form delivery | ⛔ No provider account | Create form endpoint, set `contact.formEndpoint` (+ provider name/privacy URL) |
-| Domain `inskavex.com` | ⛔ Not purchased | Purchase, then `DEPLOYMENT.md` Part C |
-| Cloudflare Pages project & deployment | ⛔ No account access | `DEPLOYMENT.md` Part A |
-| Legal entity name | ⛔ Unknown | Set `legal.entityName` if different from “Inskavex” |
+| Business email `hello@texponex.com` | ✅ Configured in the site | Confirm the mailbox receives mail (`DEPLOYMENT.md` Step 5) |
+| Contact-form delivery | ⛔ No provider account | Optional: create a form endpoint, set `contact.formEndpoint` (`DEPLOYMENT.md` Step 6); email fallback works meanwhile |
+| Domain `texponex.com` | ✅ Purchased (Cloudflare Registrar) | — |
+| Cloudflare Pages project, custom domain, redirects | ⛔ Needs your Cloudflare account | `DEPLOYMENT.md` Steps 1–4 |
+| Legal entity name | ⛔ Unknown | Set `legal.entityName` if different from “Texponex” |
 | Privacy notice legal review | ⛔ Needs company review | Review `src/pages/privacy.html` |
 | Physical device, Safari & Firefox testing | ⛔ Not available in cloud | `TESTING_CHECKLIST.md` → local checklist |
 

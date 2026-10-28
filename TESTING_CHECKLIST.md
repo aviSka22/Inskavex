@@ -1,7 +1,7 @@
 # Testing Checklist and Report
 
 Results below were **actually run** in the cloud development environment on
-**2026-10-23**, and re-run on **2026-10-24** after the motion and refinement pass, (Linux container, Node 22.22, headless Chromium 1243 via Playwright 1.63).
+**2026-10-23**, and re-run on **2026-10-24** after the motion and refinement pass and on **2026-10-28** after the Texponex rename, (Linux container, Node 22.22, headless Chromium 1243 via Playwright 1.63).
 
 **Labels:** **Automated** = scripted check · **Browser-tested** = run in a real
 (headless) Chromium · **Physical-device tested** · **Not tested** · **Blocked**
@@ -18,14 +18,14 @@ Nothing here has been deployed; there is no live URL.
 | Clean install (`npm ci`) | ✅ 0 vulnerabilities | Automated |
 | Production build (`npm run build`) | ✅ 3 pages, ~15 ms | Automated |
 | Static checks (`npm run check`) | ✅ 9 / 9 passed | Automated |
-| Browser tests (`npm run test:e2e`) | ✅ 52 / 52 passed | Browser-tested (Chromium) |
+| Browser tests (`npm run test:e2e`) | ✅ 53 / 53 passed | Browser-tested (Chromium) |
 | Accessibility — axe-core WCAG 2.2 A/AA + best practice | ✅ 0 violations (3 pages × 2 widths, open menu, form error & status states) | Browser-tested |
 | Lighthouse | ✅ see table below | Browser-tested (Chromium, local server) |
 | `npm run dev` (serves, rebuilds on change) | ✅ | Automated (curl) |
 | `npm run preview` (200 for pages, 404 for unknown) | ✅ | Automated (curl) |
 | Physical devices (iOS/Android) | — | **Not tested** |
 | Safari / Firefox engines | — | **Not tested** |
-| Live Cloudflare deployment, custom domain, HTTPS | — | **Blocked** (no account access; domain not purchased) |
+| Live Cloudflare deployment, custom domain, HTTPS | — | **Blocked** (needs the owner’s Cloudflare account; domain is purchased) |
 | Real contact-form delivery | — | **Blocked** (no provider account/endpoint yet) |
 
 ### Commands
@@ -33,7 +33,7 @@ Nothing here has been deployed; there is no live URL.
 ```bash
 npm ci
 npm run check          # build + static checks
-npm run test:e2e       # 52 Playwright tests
+npm run test:e2e       # 53 Playwright tests
 npm test               # both of the above
 ```
 
@@ -52,6 +52,10 @@ Mobile = default emulated mobile with throttling; Desktop = `--preset=desktop`.
 | `/privacy` | Desktop | **100** | **100** | **100** | **100** | 0.4 s | 0 | 0 ms |
 
 Home-page figures are from 2026-10-24, after the motion pass (before it: 99, TBT 40 ms).
+Re-measured on 2026-10-28 after the Texponex rename: mobile **99** in three consecutive
+runs (LCP 1.8 s, TBT 110 ms, CLS 0), desktop **100** in all categories. One earlier
+run immediately after the container started scored 85 (TBT 560 ms); it did not repeat
+and is treated as a cold-start outlier.
 The hero animation does not delay LCP; the small TBT increase comes from the
 style work of the entrance animation on a throttled mobile CPU.
 
@@ -85,7 +89,7 @@ No raster images on the pages (all artwork is inline SVG) · **0 third-party req
 | 6 | All required sections present | Playwright asserts `about, services, approach, focus, why, faq, contact` in order, 6 items each | ✅ | Browser-tested |
 | 7 | Mobile navigation works | Opens/closes; `aria-expanded`; background `inert`; Escape closes and returns focus; link click closes and navigates; closes on resize to desktop | ✅ | Browser-tested |
 | 8 | Contact form validation | Required fields, email format, minimum message length, `aria-invalid` + `aria-describedby`, focus to first error, live error clearing | ✅ | Browser-tested |
-| 9 | Contact submission is honest | Unconfigured: “has not been sent”, **no network request**. Email-only build: pre-filled `mailto:`, “not been sent yet”. Endpoint build: “Message sent” only on 2xx; HTTP 500 and network failure show errors and keep the text | ✅ | Browser-tested (endpoint mocked — real provider **Blocked**) |
+| 9 | Contact submission is honest | Live configuration (`hello@texponex.com`, no endpoint): opens a pre-filled `mailto:`, “Nothing has been sent yet”, **no network request**. Unconfigured build: “has not been sent”. Endpoint build: “Message sent” only on 2xx; HTTP 500 and network failure show errors and keep the text | ✅ | Browser-tested (endpoint mocked — real provider **Blocked**) |
 | 10 | Footer year updates automatically | Rendered at build time and updated by JS at runtime; test asserts current year | ✅ | Browser-tested |
 | 11 | Metadata and titles | `check.mjs`: title length, description, canonical, OG/Twitter, favicon, one `h1`, unique ids, JSON-LD without unverified fields | ✅ | Automated |
 | 12 | Sitemap and robots.txt | Generated in `dist/`; served; contents checked; 404 excluded | ✅ | Automated |
@@ -99,7 +103,7 @@ No raster images on the pages (all artwork is inline SVG) · **0 third-party req
 | — | Works without JavaScript | Content visible, nav links shown inline, no overflow, form submit disabled with explanation | ✅ | Browser-tested |
 | — | Touch target size (WCAG 2.5.8) | All controls ≥ 24 × 24 px at 375 and 1440 px (most ≥ 44 px) | ✅ | Browser-tested |
 | — | Minimum text size | No visible text below 12 px at 320 px | ✅ | Browser-tested |
-| — | Brand spelling | Every variant of the name across repo and build must be “Inskavex” | ✅ | Automated |
+| — | Brand spelling | Every variant of the name across repo and build must be “Texponex” | ✅ | Automated |
 | — | Config validation | Invalid `url`/email/endpoint fail the build with a clear message; `SITE_URL`/`ALLOW_INDEXING` overrides produce noindex + correct canonical | ✅ | Automated (manual run) |
 
 ### Visual review (screenshots inspected)
@@ -119,6 +123,7 @@ Defects found and fixed during review:
 | html-validate: lowercase doctype, template whitespace; 404 description too short | Fixed in templates/build |
 | (2026-10-24) Mobile TBT rose to ~240 ms after adding 48 individually animated SVG tiles and a layout-reading reveal setup | Tiles grouped into 11 animated courses; reveal setup reads no layout (uses the observer's first callback) → TBT ~120 ms, Performance 98–99 |
 | (2026-10-24) Statement band left the right half empty on desktop; contact column duplicated FAQ content | Label moved to a left grid column; “helpful first message” list removed |
+| (2026-10-28) The regenerated “Texponex” wordmark clipped the “p” descender (the previous name had no descenders, so the artwork ended at the baseline) | Logo generator now measures the deepest descender and extends the artwork (32 → 37.5 units); logo CSS heights scaled so the mark keeps its size |
 
 ### Known limitations / not done
 

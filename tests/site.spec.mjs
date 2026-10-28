@@ -8,8 +8,10 @@ const AXE_PATH = require.resolve('axe-core/axe.min.js');
 const WIDTHS = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
 const PAGES = ['/', '/privacy', '/this-page-does-not-exist'];
 const SECTIONS = ['about', 'services', 'approach', 'focus', 'why', 'faq', 'contact'];
+// The site as configured (site.config.mjs: email set, no form endpoint) runs on
+// :4321; these test builds cover the other contact-form configurations.
 const ENDPOINT_SITE = 'http://127.0.0.1:4322';
-const EMAIL_SITE = 'http://127.0.0.1:4323';
+const UNCONFIGURED_SITE = 'http://127.0.0.1:4323';
 
 // Fails the test on console errors, page errors and CSP violations.
 function trackErrors(page) {
@@ -65,7 +67,7 @@ test.describe('Pages and content', () => {
 
   test('metadata is present', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/Inskavex/);
+    await expect(page).toHaveTitle(/Texponex/);
     for (const selector of [
       'meta[name="description"]',
       'link[rel="canonical"]',
@@ -82,7 +84,7 @@ test.describe('Pages and content', () => {
   test('footer shows the current year', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('[data-year]')).toHaveText(String(new Date().getFullYear()));
-    await expect(page.locator('.site-footer')).toContainText('Inskavex. All rights reserved.');
+    await expect(page.locator('.site-footer')).toContainText('Texponex. All rights reserved.');
   });
 
   test('clean URLs, robots.txt and sitemap are served', async ({ request }) => {
@@ -247,13 +249,7 @@ test.describe('Navigation', () => {
   });
 });
 
-test.describe('Contact form — not configured (current site)', () => {
-  test('shows an honest pre-launch notice', async ({ page }) => {
-    await page.goto('/#contact');
-    await expect(page.locator('[data-form-notice]')).toContainText('not yet connected');
-    await expect(page.locator('.contact__email--pending')).toBeVisible();
-  });
-
+test.describe('Contact form — validation (current site)', () => {
   test('validates required fields with accessible errors', async ({ page }) => {
     await page.goto('/#contact');
     await page.locator('[data-submit]').click();
@@ -281,23 +277,6 @@ test.describe('Contact form — not configured (current site)', () => {
     await page.fill('#cf-email', 'ada@example.com');
     await expect(page.locator('#cf-email')).not.toHaveAttribute('aria-invalid', 'true');
     await expect(page.locator('#cf-email-error')).toBeEmpty();
-  });
-
-  test('valid submission says clearly that nothing was sent, and makes no request', async ({ page }) => {
-    const requests = [];
-    page.on('request', (request) => {
-      if (request.method() !== 'GET') requests.push(request.url());
-    });
-    await page.goto('/#contact');
-    await fillValidForm(page);
-    await page.locator('[data-submit]').click();
-    const status = page.locator('[data-form-status]');
-    await expect(status).toContainText('has not been sent');
-    await expect(status).not.toContainText('Message sent');
-    await expect(status).toBeFocused();
-    expect(requests).toEqual([]);
-    // The visitor's text is kept.
-    await expect(page.locator('#cf-message')).not.toBeEmpty();
   });
 
   test('clicking submit straight from a field with an error still submits (no layout shift mid-click)', async ({ page }) => {
@@ -365,19 +344,62 @@ test.describe('Contact form — endpoint configured (test build)', () => {
   });
 });
 
-test.describe('Contact form — email only (test build)', () => {
-  test('offers a pre-filled mailto link and never claims delivery', async ({ page }) => {
-    await page.goto(`${EMAIL_SITE}/#contact`);
-    await expect(page.locator('.contact__email')).toHaveAttribute('href', 'mailto:hello@example.com');
+test.describe('Contact form — email (current site: hello@texponex.com)', () => {
+  test('explains how the form works and publishes the business email', async ({ page }) => {
+    await page.goto('/#contact');
+    await expect(page.locator('[data-form-notice]')).toContainText('your email app opens');
+    await expect(page.locator('[data-form-notice]')).toContainText('hello@texponex.com');
+    await expect(page.locator('.contact__email')).toHaveAttribute('href', 'mailto:hello@texponex.com');
+    await expect(page.locator('.site-footer a[href="mailto:hello@texponex.com"]')).toBeVisible();
+  });
+
+  test('prepares a pre-filled email and never claims delivery', async ({ page }) => {
+    const errors = trackErrors(page);
+    const requests = [];
+    page.on('request', (request) => {
+      if (request.method() !== 'GET') requests.push(request.url());
+    });
+    await page.goto('/#contact');
     await fillValidForm(page);
     await page.selectOption('#cf-timeline', 'Within 1–3 months');
     await page.locator('[data-submit]').click();
     const status = page.locator('[data-form-status]');
-    await expect(status).toContainText('has not been sent yet');
+    await expect(status).toContainText('Nothing has been sent yet');
+    await expect(status).not.toContainText('Message sent');
+    await expect(status).toBeFocused();
     const href = await status.locator('a').getAttribute('href');
-    expect(href).toMatch(/^mailto:hello@example\.com\?subject=/);
+    expect(href).toMatch(/^mailto:hello@texponex\.com\?subject=/);
     expect(decodeURIComponent(href)).toContain('We would like to discuss a new website');
     expect(decodeURIComponent(href)).toContain('Timeline: Within 1–3 months');
+    // Opening the email app leaves the page in place, with the visitor's text kept.
+    expect(new URL(page.url()).pathname).toBe('/');
+    await expect(page.locator('#cf-message')).not.toBeEmpty();
+    expect(requests).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
+  test('privacy notice describes the email behavior', async ({ page }) => {
+    await page.goto('/privacy');
+    await expect(page.locator('main')).toContainText('opens your own email application');
+    await expect(page.locator('main a[href="mailto:hello@texponex.com"]').first()).toBeVisible();
+  });
+});
+
+test.describe('Contact form — nothing configured (test build)', () => {
+  test('shows an honest notice, says nothing was sent and makes no request', async ({ page }) => {
+    const requests = [];
+    page.on('request', (request) => {
+      if (request.method() !== 'GET') requests.push(request.url());
+    });
+    await page.goto(`${UNCONFIGURED_SITE}/#contact`);
+    await expect(page.locator('[data-form-notice]')).toContainText('not yet connected');
+    await expect(page.locator('.contact__email--pending')).toBeVisible();
+    await fillValidForm(page);
+    await page.locator('[data-submit]').click();
+    const status = page.locator('[data-form-status]');
+    await expect(status).toContainText('has not been sent');
+    await expect(status).not.toContainText('Message sent');
+    expect(requests).toEqual([]);
   });
 });
 

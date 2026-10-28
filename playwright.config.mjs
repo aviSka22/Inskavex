@@ -4,7 +4,7 @@
 // Three builds are tested:
 //   :4321  the site as configured in site.config.mjs
 //   :4322  a variant with a form endpoint + email (example values, tests only)
-//   :4323  a variant with an email address but no form endpoint
+//   :4323  a variant with no email and no form endpoint (settings cleared)
 import { defineConfig, devices } from '@playwright/test';
 
 const serve = (port, outDir, env = {}) => ({
@@ -32,6 +32,6 @@ export default defineConfig({
       FORM_ENDPOINT: 'https://forms.example.com/f/test',
       CONTACT_EMAIL: 'hello@example.com',
     }),
-    serve(4323, '.test-builds/email', { CONTACT_EMAIL: 'hello@example.com' }),
+    serve(4323, '.test-builds/unconfigured', { CONTACT_EMAIL: '', FORM_ENDPOINT: '' }),
   ],
 });

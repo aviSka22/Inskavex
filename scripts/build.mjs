@@ -64,7 +64,7 @@ function structuredData(config) {
     '@id': `${config.url}/#organization`,
     name: config.name,
     url: `${config.url}/`,
-    logo: `${config.url}/brand/inskavex-mark.png`,
+    logo: `${config.url}/brand/texponex-mark.png`,
     description: config.description,
     slogan: config.tagline,
   };
