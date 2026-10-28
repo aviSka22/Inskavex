@@ -349,8 +349,8 @@ def contact_icon(kind, x, y):
 
 
 def business_card_v2(path, details, logo, mark):
-    """Alternative card: tagline on the front; icon-led contact details and a
-    labelled QR code on the back. Same size, colors and margins as the original."""
+    """Alternative card: tagline on the front; icon-led contact details on the
+    back. Same size, colors, margins and QR code as the original."""
     W, H = CARD_W + 2 * BLEED, CARD_H + 2 * BLEED
     trim = (BLEED, BLEED, BLEED + CARD_W, BLEED + CARD_H)
     left, top = BLEED + SAFE + 2 * MM, BLEED + SAFE + 2 * MM
@@ -390,8 +390,6 @@ def business_card_v2(path, details, logo, mark):
     if details.get("qr"):
         size = QR_SIZE_MM * MM
         back += pdf_fill(qr_ops(details["qr"], size), CMYK_BLACK, dx=right - size, dy=bottom - size)
-        label, label_w, *_ = shape("Scan to visit", size=5.6, wght=480, wdth=100)
-        back += pdf_fill(label, CMYK_GREY, dx=right - label_w, dy=bottom - size - 3.2)
 
     m_scale = 9 * MM / mark["width"]
     mx = right - mark["width"] * m_scale
